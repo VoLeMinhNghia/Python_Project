@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="KhoaBtn">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>300</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 0);
+selection-background-color: rgb(209, 209, 0);
+font: 10pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Quản Lý Khoa</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/khoa.png</normaloff>images/khoa.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>images/banner.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NganhBtn">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>300</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(85, 85, 127);
+selection-background-color: rgb(0, 116, 170);
+font: 10pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Quản Lý Nghành</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/nghanh.png</normaloff>images/nghanh.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="LopBtn">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>300</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(170, 0, 255);
+selection-background-color: rgb(135, 68, 203);
+font: 10pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Quản Lý Lớp</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/lop.png</normaloff>images/lop.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NienKhoaBtn">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>420</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(202, 135, 202);
+selection-background-color: rgb(211, 141, 211);
+font: 10pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Niên Khóa</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/nienkhoa.png</normaloff>images/nienkhoa.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="HocKyBtn">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>420</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 170, 0);
+selection-background-color: rgb(207, 138, 0);
+font: 10pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Học Kỳ</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/hocky.png</normaloff>images/hocky.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="MonHocBtn">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>420</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(85, 170, 0);
+selection-background-color: rgb(108, 216, 0);
+font: 10pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="locale">
+     <locale language="Vietnamese" country="Vietnam"/>
+    </property>
+    <property name="text">
+     <string>Môn Học</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>images/mon.png</normaloff>images/mon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
