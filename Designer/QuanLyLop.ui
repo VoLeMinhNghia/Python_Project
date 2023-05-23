@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabQLLop">
      <attribute name="title">
@@ -642,7 +642,7 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>390</x>
         <y>20</y>
         <width>51</width>
         <height>16</height>
@@ -660,7 +660,7 @@ color: rgb(255, 255, 255);</string>
        <rect>
         <x>220</x>
         <y>20</y>
-        <width>101</width>
+        <width>161</width>
         <height>22</height>
        </rect>
       </property>
@@ -671,7 +671,7 @@ color: rgb(255, 255, 255);</string>
      <widget class="QComboBox" name="cbBoxHocKy">
       <property name="geometry">
        <rect>
-        <x>390</x>
+        <x>450</x>
         <y>20</y>
         <width>101</width>
         <height>22</height>

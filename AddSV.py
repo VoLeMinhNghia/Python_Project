@@ -8,10 +8,16 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from functools import partial
+from database import *
 
+myDB = MY_DB()
 
 class Ui_MainWindow(object):
+    global myDB
     def setupUi(self, MainWindow):
+        myDB.connect()
+        self.MainWindow = MainWindow
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(484, 309)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
@@ -97,17 +103,49 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.btnCancel.clicked.connect(partial(self.exit, MainWindow))
+        self.btnCancel.clicked.connect(partial(self.close, MainWindow))
+
+        self.lopTable = myDB.select_all_lop()
+        self.cbBoxLop.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
+        for row_data in self.lopTable:
+                ma_lop = row_data[0] 
+                self.cbBoxLop.addItem(ma_lop)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def exit(self, MainWindow):
-        MainWindow.hide()
+        self.btnSave.clicked.connect(partial(self.on_btnSave_clicked, MainWindow))
+
+    def on_btnSave_clicked(self, MainWindow):
+        current_IDLop = self.cbBoxLop.currentText()
+        current_name = self.NameSV.text()
+
+        date_of_birth = self.dateOfB.date()
+        current_dob = date_of_birth.toString("yyyy-MM-dd")
+
+        current_gender = 1
+        if self.cbBoxSex.currentText() == "Nam":
+            current_gender = 0
+        elif self.cbBoxSex.currentText() == "Nữ":
+            current_gender = 1
+        else:
+            current_gender = 2
+
+        current_dantoc = self.detailDanToc.text()
+        current_diachi = self.plainTextEditDiaChi.toPlainText()
+        current_sdt = self.detailSDT.text()
+
+        if current_name == "" or current_dantoc == "" or current_diachi == "" or current_sdt == "":
+            return self.close()
+        myDB.insert_sinhvien(current_IDLop, current_name, current_dob, current_gender, current_dantoc, current_diachi, current_sdt)
+        self.MainWindow.close() 
+
+    def close(self):
+        self.MainWindow.close() 
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Thêm Sinh Viên"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.cbBoxSex.setItemText(0, _translate("MainWindow", "Nam"))
         self.cbBoxSex.setItemText(1, _translate("MainWindow", "Nữ"))
         self.cbBoxSex.setItemText(2, _translate("MainWindow", "Khác"))
@@ -118,14 +156,20 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "Ngày Sinh"))
         self.label.setText(_translate("MainWindow", "THÔNG TIN SINH VIÊN"))
         self.label_4.setText(_translate("MainWindow", "Họ Tên"))
+        self.dateOfB.setDisplayFormat(_translate("MainWindow", "d/M/yyyy"))
         self.label_9.setText(_translate("MainWindow", "Liên Hệ"))
         self.btnSave.setText(_translate("MainWindow", "Lưu"))
         self.btnCancel.setText(_translate("MainWindow", "Hủy"))
 
+def closeWindow():
+    global myDB
+    myDB.disconnect()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
+    app.lastWindowClosed.connect(closeWindow)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)

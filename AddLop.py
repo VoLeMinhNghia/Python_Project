@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        # self.btnCancel.clicked.connect(partial(self.exit, MainWindow))
+        self.btnCancel.clicked.connect(self.close)
 
         self.nghanhTable = myDB.select_all_nghanh()
         self.cbBoxNghanh.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
@@ -93,18 +93,12 @@ class Ui_MainWindow(object):
                 self.cbBoxNienKhoa.addItem(str(ma_nienkhoa) + " - " + str(ten_nienkhoa))
 
         self.btnSave.clicked.connect(partial(self.on_btnSave_clicked, MainWindow))
-        
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    # def get_lop_info(self):
-    #     malop = self.IDLop.text()
-    #     tenlop = self.NameLop.text()
-    #     manghanh = self.cbBoxNghanh.currentText()
-    #     nienkhoa = self.cbBoxNienKhoa.currentText().split(" ")
-    #     manNienkhoa = nienkhoa[0]
-    #     print( malop, manghanh, manNienkhoa, tenlop)
+    def close(self):
+        self.MainWindow.close() 
 
     def on_btnSave_clicked(self, MainWindow):
         malop = self.IDLop.text()
@@ -113,8 +107,8 @@ class Ui_MainWindow(object):
         nienkhoa = self.cbBoxNienKhoa.currentText().split(" ")
         manNienkhoa = nienkhoa[0]
 
-        if(malop == "" and tenlop == ""):
-            return self.exit()
+        if(malop == "" or tenlop == ""):
+            return self.close()
         myDB.insert_lop(malop, manghanh, manNienkhoa, tenlop)
         self.MainWindow.close() 
 
@@ -129,10 +123,15 @@ class Ui_MainWindow(object):
         self.btnSave.setText(_translate("MainWindow", "Lưu"))
         self.btnCancel.setText(_translate("MainWindow", "Hủy"))
 
+def closeWindow():
+    global myDB
+    myDB.disconnect()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
+    app.lastWindowClosed.connect(closeWindow)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)

@@ -10,12 +10,20 @@ from functools import partial
 from database import *
 
 myDB = MY_DB()
-instance  = ""
+instance  = None
 class Ui_MainWindow(object):
     global myDB
     global instance 
+
     def setupUi(self, MainWindow):
         myDB.connect()
+        self.addSVWindow = None
+        self.detailSVWindow = None
+        self.addLopWindow = None
+        self.addDiemWindow = None
+        self.detailLopWindow = None
+        self.addDiemWindow = None
+
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -212,15 +220,15 @@ class Ui_MainWindow(object):
         self.label_6.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(parent=self.tabQLDiem)
-        self.label_7.setGeometry(QtCore.QRect(340, 20, 51, 16))
+        self.label_7.setGeometry(QtCore.QRect(390, 20, 51, 16))
         self.label_7.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_7.setObjectName("label_7")
         self.cbBoxMon_2 = QtWidgets.QComboBox(parent=self.tabQLDiem)
-        self.cbBoxMon_2.setGeometry(QtCore.QRect(220, 20, 101, 22))
+        self.cbBoxMon_2.setGeometry(QtCore.QRect(220, 20, 161, 22))
         self.cbBoxMon_2.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.cbBoxMon_2.setObjectName("cbBoxMon_2")
         self.cbBoxHocKy = QtWidgets.QComboBox(parent=self.tabQLDiem)
-        self.cbBoxHocKy.setGeometry(QtCore.QRect(390, 20, 101, 22))
+        self.cbBoxHocKy.setGeometry(QtCore.QRect(450, 20, 101, 22))
         self.cbBoxHocKy.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.cbBoxHocKy.setObjectName("cbBoxHocKy")
         self.label = QtWidgets.QLabel(parent=self.tabQLDiem)
@@ -342,8 +350,23 @@ class Ui_MainWindow(object):
                 self.tableSinhVien.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                      self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        
+        self.lopTable = myDB.select_all_lop()
+        self.cbBoxLop.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
+        self.cbBoxLop.addItem("All")
+        for row_data in self.lopTable:
+                ma_lop = row_data[0] 
+                self.cbBoxLop.addItem(ma_lop)
 
+        self.cbBoxLop.currentIndexChanged.connect(self.on_cbLop_clicked)
+        self.btnFindSV.clicked.connect(self.findSV_byname)
+        self.btnCancalFind.clicked.connect(self.cancalFind)
         self.tableSinhVien.cellClicked.connect(self.on_tableSV_cellClicked)
+        self.btnAddSV.clicked.connect(partial(self.goAddSV, MainWindow))
+        self.btnDetailSV.clicked.connect(partial(self.goDetailSV, MainWindow))
+        self.btnReloadSV.clicked.connect(self.load_TableSV)
+        self.btnDeleteSV.clicked.connect(self.deleteSV)
+        self.btnSortSV.clicked.connect(self.sort_tableSV_by_name)
         
         self.diemTable = myDB.select_all_diem()
         self.tableDiem.setRowCount(0)
@@ -351,6 +374,27 @@ class Ui_MainWindow(object):
                 self.tableDiem.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                      self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
+        self.monTable = myDB.select_all_monhoc()
+        self.cbBoxMon_2.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
+        self.cbBoxMon_2.addItem("All")
+        for row_data in self.monTable:
+                ma_mon = row_data[0] 
+                ten_mon = row_data[1]
+                self.cbBoxMon_2.addItem(str(ma_mon) + " - " + ten_mon)
+
+        self.hockyTable = myDB.select_all_hocky()
+        self.cbBoxHocKy.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
+        self.cbBoxHocKy.addItem("All")
+        for row_data in self.hockyTable:
+                ma_hocky = row_data[0] 
+                ten_hocky = row_data[1]
+                self.cbBoxHocKy.addItem(str(ma_hocky) + " - " + ten_hocky)
+
+        self.tableDiem.cellClicked.connect(self.on_tableDiem_cellClicked)
+        self.cbBoxMon_2.currentIndexChanged.connect(self.on_cbMon_clicked)
+        self.cbBoxHocKy.currentIndexChanged.connect(self.on_cbHocKy_clicked)
+        self.btnReloadDiem.clicked.connect(self.load_TableDiem)
 
         self.tableDiem.cellClicked.connect(self.on_tableDiem_cellClicked)
 
@@ -363,12 +407,13 @@ class Ui_MainWindow(object):
         self.window.show()
 
     def goAddDiem(self, MainWindow):
-        from AddDiem import Ui_MainWindow as Ui_MainWindow
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.window)
-        # MainWindow.hide()
-        self.window.show()
+        if self.addDiemWindow is None:
+                from AddDiem import Ui_MainWindow as Ui_MainWindow
+                self.addDiemWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.addDiemWindow)
+        self.addDiemWindow.show()
+        self.addDiemWindow.activateWindow()
 
 #---------------------------------------Quản Lý Lớp------------------------------------------
     def on_tableLop_cellClicked(self, row, column):
@@ -384,23 +429,26 @@ class Ui_MainWindow(object):
         self.maLop_2.setText(lop[0])
 
     def goAddLop(self, MainWindow):
-        from AddLop import Ui_MainWindow as Ui_MainWindow
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.window)
-        # MainWindow.hide()
-        self.window.show()
+        if self.addLopWindow is None:
+                from AddLop import Ui_MainWindow as Ui_MainWindow
+                self.addLopWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.addLopWindow)
+        self.addLopWindow.show()
+        self.addLopWindow.activateWindow()
 
     def goDetailLop(self, MainWindow):
         global instance
-        if self.maLop_2.text() == "": return
-        from DetailLop import Ui_MainWindow as Ui_MainWindow
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.set_selected_maLop(instance)  # Gán giá trị selectedMaLop trước khi gọi setupUi
-        self.ui.setupUi(self.window)
-        # MainWindow.hide()
-        self.window.show()
+        if self.maLop_2.text() == "":
+                return
+        if self.detailLopWindow is None:
+                from DetailLop import Ui_MainWindow as Ui_MainWindow
+                self.detailLopWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+        self.ui.set_selected_maLop(instance)
+        self.ui.setupUi(self.detailLopWindow)
+        self.detailLopWindow.show()
+        self.detailLopWindow.activateWindow()
 
     def deleteLop(self):
         current_id = self.maLop_2.text()
@@ -430,6 +478,7 @@ class Ui_MainWindow(object):
 
 
     def load_TableLop(self):
+        self.maLop_2.setText("")
         self.lopTable = myDB.select_all_lop()
         self.tableLop.setRowCount(0)
         for row_num, row_data in enumerate(self.lopTable):
@@ -439,40 +488,172 @@ class Ui_MainWindow(object):
 
 #---------------------------------------Quản Lý SV------------------------------------------
 
+    def on_cbLop_clicked(self):
+        selected_lop = self.cbBoxLop.currentText()  # Lấy lớp được chọn từ combobox
+        if selected_lop == "All":
+                # Hiển thị tất cả sinh viên
+                self.load_TableSV()
+        else:
+                # Hiển thị sinh viên của lớp được chọn
+                self.load_TableSinhVienByLop(selected_lop)
+
+    def load_TableSinhVienByLop(self, selected_lop):
+        self.sinhVienTable = myDB.select_sinhvien_by_lop(selected_lop)
+        self.tableSinhVien.setRowCount(0)
+        for row_num, row_data in enumerate(self.sinhVienTable):
+                self.tableSinhVien.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                     self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
+    def findSV_byname(self):
+        name_find = self.lineEditFindSV.text()
+        self.sinhVienTable = myDB.select_sinhvien_by_name(name_find)
+        self.tableSinhVien.setRowCount(0)
+        for row_num, row_data in enumerate(self.sinhVienTable):
+                self.tableSinhVien.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                        self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+    
+    def cancalFind(self):
+        self.lineEditFindSV.setText("")
+        self.load_TableSV()
+
     def on_tableSV_cellClicked(self, row, column):
-        # Lấy mã khoa từ dòng được click
+        global instance
+        # Lấy mã SV từ dòng được click
         maSV = self.tableSinhVien.item(row, 0).text()
 
-        # Lấy thông tin khoa từ CSDL
-        sv = myDB.select_sinhvien_by_id(maSV).fetchone()
-
-        # Hiển thị thông tin khoa trong groupBox
-        self.maSinhVien.setText(str(sv[0]))
-        self.maLop.setText(sv[1])
-        self.hoTen.setText(sv[2])
+        # Lấy thông tin sinhvien từ CSDL
+        sinhvien = myDB.select_sinhvien_by_id(maSV).fetchone()
+        #lưu masinhvien vào biến instance của lớp (self) để có thể truy cập từ bên ngoài.
+        instance = maSV
+        # Hiển thị thông tin sinhvien trong groupBox
+        self.maSinhVien.setText(str(sinhvien[0]))
+        self.maLop.setText(sinhvien[1])
+        self.hoTen.setText(sinhvien[2])
 
     def goAddSV(self, MainWindow):
-        from AddSV import Ui_MainWindow as Ui_MainWindow
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self.window)
-        # MainWindow.hide()
-        self.window.show()
+        if self.addSVWindow is None:
+                from AddSV import Ui_MainWindow as Ui_MainWindow
+                self.addSVWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.addSVWindow)
+        self.addSVWindow.show()
+        self.addSVWindow.activateWindow()
+
+    def goDetailSV(self, MainWindow):
+        global instance
+        if self.maSinhVien.text() == "": return
+        if self.detailSVWindow is None:
+                from DetailSV import Ui_MainWindow as Ui_MainWindow
+                self.detailSVWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+        self.ui.set_selected_maSV(instance)
+        self.ui.setupUi(self.detailSVWindow)
+        self.detailSVWindow.show()
+
+    def deleteSV(self):
+        current_id = self.maSinhVien.text()
+        if(current_id == ""): return
+        else:
+             myDB.delete_sinhvien(current_id)
+             self.maSinhVien.setText("")
+             self.hoTen.setText("")
+             self.maLop.setText("")
+             self.load_TableSV()
+
+    def sort_tableSV_by_name(self):
+        # Lấy số cột trong bảng
+        column_count = self.tableSinhVien.columnCount()
+        # Lấy số hàng trong bảng
+        row_count = self.tableSinhVien.rowCount()
+        # Tạo một danh sách các dòng trong bảng, mỗi dòng là một list các giá trị trong ô
+        rows = [[self.tableSinhVien.item(row, col).text() for col in range(column_count)] for row in range(row_count)]
+        # Sắp xếp các dòng theo thứ tự tăng dần của cột tên SinhVien (cột thứ hai)
+        sorted_rows = sorted(rows, key=lambda row: row[2])
+        # Xóa tất cả các hàng cũ trong bảng
+        self.tableSinhVien.setRowCount(0)
+        # Thêm các hàng đã sắp xếp vào bảng
+        for row in sorted_rows:
+                self.tableSinhVien.insertRow(self.tableSinhVien.rowCount())
+                for col, value in enumerate(row):
+                        item = QtWidgets.QTableWidgetItem(value)
+                        self.tableSinhVien.setItem(self.tableSinhVien.rowCount() - 1, col, item)
+    def load_TableSV(self):
+        self.lineEditFindSV.setText("")
+        self.maSinhVien.setText("")
+        self.maLop.setText("")
+        self.hoTen.setText("")
+        self.sinhVienTable = myDB.select_all_sinhvien()
+        self.tableSinhVien.setRowCount(0)
+        for row_num, row_data in enumerate(self.sinhVienTable):
+                self.tableSinhVien.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                     self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
 
 #---------------------------------------Quản Lý Điểm------------------------------------------
 
+    def on_cbMon_clicked(self):
+        selected_mon = self.cbBoxMon_2.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+        selected_mon = selected_mon[0]
+        if selected_mon == "All":
+                # Hiển thị tất cả sinh viên
+                self.load_TableDiem()
+        else:
+                # Hiển thị sinh viên của lớp được chọn
+                self.load_TableDiemBymon(selected_mon)
+
+    def load_TableDiemBymon(self, selected_mon):
+        self.diemTable = myDB.select_diem_by_mon(selected_mon)
+        self.tableDiem.setRowCount(0)
+        for row_num, row_data in enumerate(self.diemTable):
+                self.tableDiem.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                     self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
+    def on_cbHocKy_clicked(self):
+        selected_hocky = self.cbBoxHocKy.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+        selected_hocky = selected_hocky[0]
+        if selected_hocky == "All":
+                # Hiển thị tất cả sinh viên
+                self.load_TableDiem()
+        else:
+                # Hiển thị sinh viên của lớp được chọn
+                self.load_TableDiemByhocky(selected_hocky)
+
+    def load_TableDiemByhocky(self, selected_hocky):
+        self.diemTable = myDB.select_diem_by_hocky(selected_hocky)
+        self.tableDiem.setRowCount(0)
+        for row_num, row_data in enumerate(self.diemTable):
+                self.tableDiem.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                     self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
     def on_tableDiem_cellClicked(self, row, column):
-        # Lấy mã khoa từ dòng được click
         maSV = self.tableDiem.item(row, 0).text()
+        maHK = self.tableDiem.item(row, 1).text()
         maMon = self.tableDiem.item(row, 2).text()
 
         # Lấy thông tin khoa từ CSDL
-        diemSV = myDB.select_diem_by_ids(int(maSV), int(maMon)).fetchone()
+        diemSV = myDB.select_diem_by_ids(int(maSV), int(maHK), int(maMon)).fetchone()
 
         # Hiển thị thông tin khoa trong groupBox
         self.maSV.setText(str(diemSV[0]))
         self.maHK.setText(str(diemSV[1]))
         self.maMon.setText(str(diemSV[2]))
+
+    def load_TableDiem(self):
+        self.cbBoxHocKy.setCurrentText("All")
+        self.cbBoxMon_2.setCurrentText("All")
+        self.maSV.setText("")
+        self.maHK.setText("")
+        self.maMon.setText("")
+        self.diemTable = myDB.select_all_diem()
+        self.tableDiem.setRowCount(0)
+        for row_num, row_data in enumerate(self.diemTable):
+                self.tableDiem.insertRow(row_num)
+                for col_num, col_data in enumerate(row_data):
+                     self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

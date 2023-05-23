@@ -211,6 +211,9 @@
     <property name="readOnly">
      <bool>false</bool>
     </property>
+    <property name="displayFormat">
+     <string>d/M/yyyy</string>
+    </property>
    </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">

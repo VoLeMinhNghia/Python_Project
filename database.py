@@ -141,7 +141,7 @@ class MY_DB():
         self.conn.commit()
 
     def insert_diem(self, masv, mahocky, mamon, diemqt, diemgk, diemck):
-        self.c.execute("INSERT INTO DIEM VALUES (?, ?, ?, ?, ?, ?)", (masv, mahocky, mamon, diemqt, diemgk, diemck))
+        self.cur.execute("INSERT INTO DIEM VALUES (?, ?, ?, ?, ?, ?)", (masv, mahocky, mamon, diemqt, diemgk, diemck))
         self.conn.commit()
 
     #-------------------------------UPDATE--------------------------------------------
@@ -214,9 +214,31 @@ class MY_DB():
         self.cur.execute("SELECT * FROM SINHVIEN WHERE MaSV = ?", (masv,))
         rows = self.cur
         return rows
-
-    def select_diem_by_ids(self, masv, mamon):
-        self.cur.execute("SELECT * FROM DIEM WHERE MaSV = ? AND MaMon = ?", (masv, mamon))
+    
+    def select_sinhvien_by_lop(self, malop):
+        self.cur.execute("SELECT * FROM SINHVIEN WHERE MaLop = ?", (malop,))
+        rows = self.cur
+        return rows
+    
+    def select_sinhvien_by_name(self, name):
+        query = "SELECT * FROM SINHVIEN WHERE HoTen LIKE ?"
+        name_pattern = f"%{name}%"
+        self.cur.execute(query, (name_pattern,))
+        rows = self.cur
+        return rows
+    
+    def select_diem_by_ids(self, masv, mahocky, mamon):
+        self.cur.execute("SELECT * FROM DIEM WHERE MaSV = ? AND MaHocKy = ? AND MaMon = ?", (masv, mahocky, mamon))
+        rows = self.cur
+        return rows
+    
+    def select_diem_by_mon(self, mamon):
+        self.cur.execute("SELECT * FROM DIEM WHERE MaMon = ?", (mamon,))
+        rows = self.cur
+        return rows
+    
+    def select_diem_by_hocky(self, mahocky):
+        self.cur.execute("SELECT * FROM DIEM WHERE MaHocKy = ?", (mahocky,))
         rows = self.cur
         return rows
 
@@ -300,6 +322,14 @@ class MY_DB():
     
     def get_ten_nghanh(self, maNghanh):
         self.cur.execute("SELECT TenNghanh FROM NGHANH WHERE MaNghanh = ?", (maNghanh,))
+        result = self.cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return ""
+        
+    def get_ten_sinhvien(self, maSV):
+        self.cur.execute("SELECT HoTen FROM SINHVIEN WHERE MaSV = ?", (maSV,))
         result = self.cur.fetchone()
         if result:
             return result[0]

@@ -10,15 +10,15 @@ from functools import partial
 from database import *
 
 myDB = MY_DB()
-selectedMaLop = None
+
 
 class Ui_MainWindow(object):
+    selectedMaLop = None
     global myDB
-    global selectedMaLop
     def setupUi(self, MainWindow):
         myDB.connect()
         self.MainWindow = MainWindow
-
+        
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(453, 190)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
@@ -83,9 +83,9 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        if selectedMaLop:
+        if self.selectedMaLop != None:
             # Lấy thông tin lớp từ CSDL dựa trên selectedMaLop
-            lop = myDB.select_lop_by_id(selectedMaLop).fetchone()
+            lop = myDB.select_lop_by_id(self.selectedMaLop).fetchone()
 
             # Hiển thị thông tin lớp trong giao diện DetailLop
             self.detailIDLop.setText(lop[0])
@@ -97,8 +97,7 @@ class Ui_MainWindow(object):
         self.btnClose.clicked.connect(self.close)
 
     def set_selected_maLop(self, maLop):
-        global selectedMaLop
-        selectedMaLop = maLop
+        self.selectedMaLop = maLop
 
     def update_data(self, MainWindow):
         # from QuanLyLop import Ui_MainWindow as Ui_MainWindow
@@ -114,6 +113,7 @@ class Ui_MainWindow(object):
         
     def close(self):
         self.MainWindow.close() 
+        
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Chi Tiết Lớp"))
@@ -125,10 +125,15 @@ class Ui_MainWindow(object):
         self.btnEdit.setText(_translate("MainWindow", "Sửa"))
         self.btnClose.setText(_translate("MainWindow", "Đóng"))
 
+def closeWindow():
+    global myDB
+    myDB.disconnect()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
+    app.lastWindowClosed.connect(closeWindow)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
