@@ -11,17 +11,24 @@ from database import *
 
 myDB = MY_DB()
 instance  = None
+instanceMaMon = None
+instanceMaHocKy = None
+
 class Ui_MainWindow(object):
     global myDB
     global instance 
+    global instanceMaMon
+    global instanceMaHocKy
 
     def setupUi(self, MainWindow):
         myDB.connect()
         self.addSVWindow = None
         self.detailSVWindow = None
+        self.detailLopWindow = None
+        self.detailDiemWindow = None
+
         self.addLopWindow = None
         self.addDiemWindow = None
-        self.detailLopWindow = None
         self.addDiemWindow = None
 
 
@@ -394,9 +401,11 @@ class Ui_MainWindow(object):
         self.tableDiem.cellClicked.connect(self.on_tableDiem_cellClicked)
         self.cbBoxMon_2.currentIndexChanged.connect(self.on_cbMon_clicked)
         self.cbBoxHocKy.currentIndexChanged.connect(self.on_cbHocKy_clicked)
+        self.btnDetailDiem.clicked.connect(partial(self.goDetailDiem, MainWindow))
         self.btnReloadDiem.clicked.connect(self.load_TableDiem)
-
+        self.btnDeleteDiem.clicked.connect(self.deleteDiem)
         self.tableDiem.cellClicked.connect(self.on_tableDiem_cellClicked)
+        self.btnSortDiem.clicked.connect(self.sort_tableDiem_by_mon)
 
     def goHome(self, MainWindow):
         from MainWindow import Ui_MainWindow as Ui_MainWindow
@@ -405,15 +414,6 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.window)
         MainWindow.close()
         self.window.show()
-
-    def goAddDiem(self, MainWindow):
-        if self.addDiemWindow is None:
-                from AddDiem import Ui_MainWindow as Ui_MainWindow
-                self.addDiemWindow = QtWidgets.QMainWindow()
-                self.ui = Ui_MainWindow()
-                self.ui.setupUi(self.addDiemWindow)
-        self.addDiemWindow.show()
-        self.addDiemWindow.activateWindow()
 
 #---------------------------------------Quản Lý Lớp------------------------------------------
     def on_tableLop_cellClicked(self, row, column):
@@ -489,6 +489,10 @@ class Ui_MainWindow(object):
 #---------------------------------------Quản Lý SV------------------------------------------
 
     def on_cbLop_clicked(self):
+        self.lineEditFindSV.setText("")
+        self.maSinhVien.setText("")
+        self.maLop.setText("")
+        self.hoTen.setText("")
         selected_lop = self.cbBoxLop.currentText()  # Lấy lớp được chọn từ combobox
         if selected_lop == "All":
                 # Hiển thị tất cả sinh viên
@@ -584,6 +588,7 @@ class Ui_MainWindow(object):
         self.maSinhVien.setText("")
         self.maLop.setText("")
         self.hoTen.setText("")
+        self.cbBoxLop.setCurrentText("All")
         self.sinhVienTable = myDB.select_all_sinhvien()
         self.tableSinhVien.setRowCount(0)
         for row_num, row_data in enumerate(self.sinhVienTable):
@@ -630,9 +635,17 @@ class Ui_MainWindow(object):
                      self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
 
     def on_tableDiem_cellClicked(self, row, column):
+        global instance 
+        global instanceMaMon
+        global instanceMaHocKy
+
         maSV = self.tableDiem.item(row, 0).text()
         maHK = self.tableDiem.item(row, 1).text()
         maMon = self.tableDiem.item(row, 2).text()
+
+        instance = maSV
+        instanceMaHocKy = maHK
+        instanceMaMon = maMon
 
         # Lấy thông tin khoa từ CSDL
         diemSV = myDB.select_diem_by_ids(int(maSV), int(maHK), int(maMon)).fetchone()
@@ -641,6 +654,57 @@ class Ui_MainWindow(object):
         self.maSV.setText(str(diemSV[0]))
         self.maHK.setText(str(diemSV[1]))
         self.maMon.setText(str(diemSV[2]))
+
+    def goDetailDiem(self, MainWindow):
+        global instance 
+        global instanceMaMon
+        global instanceMaHocKy
+
+        if self.maSV.text() == "" or self.maHK.text() == "" or self.maMon.text() == "": return
+        if self.detailDiemWindow is None:
+                from DetailDiem import Ui_MainWindow as Ui_MainWindow
+                self.detailDiemWindow = QtWidgets.QMainWindow()  # Sửa lại tên biến thành self.detailDiemWindow
+                self.ui = Ui_MainWindow()
+        self.ui.set_selected_bangDiem(instance, instanceMaHocKy, instanceMaMon)
+        self.ui.setupUi(self.detailDiemWindow)
+        self.detailDiemWindow.show()
+
+    def goAddDiem(self, MainWindow):
+        if self.addDiemWindow is None:
+                from AddDiem import Ui_MainWindow as Ui_MainWindow
+                self.addDiemWindow = QtWidgets.QMainWindow()
+                self.ui = Ui_MainWindow()
+                self.ui.setupUi(self.addDiemWindow)
+        self.addDiemWindow.show()
+        self.addDiemWindow.activateWindow()
+
+    def deleteDiem(self):
+        current_id = self.maSV.text()
+        current_mamon = self.maMon.text()
+        if(current_id == "" or current_mamon == ""): return
+        else:
+             myDB.delete_diem(current_id, current_mamon)
+             self.maSV.setText("")
+             self.maMon.setText("")
+             self.load_TableDiem()
+
+    def sort_tableDiem_by_mon(self):
+        # Lấy số cột trong bảng
+        column_count = self.tableDiem.columnCount()
+        # Lấy số hàng trong bảng
+        row_count = self.tableDiem.rowCount()
+        # Tạo một danh sách các dòng trong bảng, mỗi dòng là một list các giá trị trong ô
+        rows = [[self.tableDiem.item(row, col).text() for col in range(column_count)] for row in range(row_count)]
+        # Sắp xếp các dòng theo thứ tự tăng dần của cột mon (cột thứ hai)
+        sorted_rows = sorted(rows, key=lambda row: row[2])
+        # Xóa tất cả các hàng cũ trong bảng
+        self.tableDiem.setRowCount(0)
+        # Thêm các hàng đã sắp xếp vào bảng
+        for row in sorted_rows:
+                self.tableDiem.insertRow(self.tableDiem.rowCount())
+                for col, value in enumerate(row):
+                        item = QtWidgets.QTableWidgetItem(value)
+                        self.tableDiem.setItem(self.tableDiem.rowCount() - 1, col, item)
 
     def load_TableDiem(self):
         self.cbBoxHocKy.setCurrentText("All")

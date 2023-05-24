@@ -7,16 +7,28 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QDate
+from functools import partial
+from database import *
 
+myDB = MY_DB()
 
 class Ui_MainWindow(object):
+    selectedMaSV = None
+    selectedMaHK = None
+    selectedMaMon = None
+    global myDB
+
     def setupUi(self, MainWindow):
+        myDB.connect()
+        self.MainWindow = MainWindow
+
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(349, 299)
+        MainWindow.resize(278, 299)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(10, 110, 191, 141))
+        self.groupBox.setGeometry(QtCore.QRect(10, 110, 161, 141))
         self.groupBox.setStyleSheet("background-color: rgb(170, 255, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
@@ -50,48 +62,86 @@ class Ui_MainWindow(object):
         self.label_6.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(190, 10, 51, 16))
+        self.label_7.setGeometry(QtCore.QRect(10, 40, 51, 21))
         self.label_7.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_7.setObjectName("label_7")
         self.maSV = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.maSV.setGeometry(QtCore.QRect(100, 60, 113, 22))
+        self.maSV.setGeometry(QtCore.QRect(100, 70, 161, 22))
         self.maSV.setReadOnly(True)
         self.maSV.setObjectName("maSV")
         self.label_8 = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(10, 60, 81, 16))
+        self.label_8.setGeometry(QtCore.QRect(10, 70, 81, 21))
         self.label_8.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_8.setObjectName("label_8")
         self.btnClose = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnClose.setGeometry(QtCore.QRect(280, 220, 61, 24))
+        self.btnClose.setGeometry(QtCore.QRect(180, 220, 61, 24))
         self.btnClose.setStyleSheet("")
         self.btnClose.setObjectName("btnClose")
         self.btnEdit = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnEdit.setGeometry(QtCore.QRect(210, 220, 61, 24))
+        self.btnEdit.setGeometry(QtCore.QRect(180, 190, 61, 24))
         self.btnEdit.setStyleSheet("background-color: rgb(255, 170, 0);")
         self.btnEdit.setObjectName("btnEdit")
         self.maMH = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.maMH.setGeometry(QtCore.QRect(70, 10, 113, 22))
+        self.maMH.setGeometry(QtCore.QRect(100, 10, 161, 22))
         self.maMH.setReadOnly(True)
         self.maMH.setObjectName("maMH")
         self.hocky = QtWidgets.QLineEdit(parent=self.centralwidget)
-        self.hocky.setGeometry(QtCore.QRect(240, 10, 81, 22))
+        self.hocky.setGeometry(QtCore.QRect(100, 40, 161, 22))
         self.hocky.setReadOnly(True)
         self.hocky.setObjectName("hocky")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 349, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 278, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        if self.selectedMaSV and self.selectedMaHK and self.selectedMaMon:
+            # Lấy thông tin điểm từ CSDL
+            bangDiem = myDB.select_diem_by_ids(self.selectedMaSV, self.selectedMaHK, self.selectedMaMon).fetchone()
+
+            # Hiển thị thông tin điểm trong giao diện DetailDiem
+            self.idSinhvien = bangDiem[0]
+            self.idHocky = bangDiem[1]
+            self.idMonhoc = bangDiem[2]
+            self.maSV.setText(myDB.get_ten_sinhvien(bangDiem[0]))
+            self.hocky.setText(myDB.get_ten_hoc_ky(bangDiem[1]))
+            self.maMH.setText(myDB.get_ten_mon_hoc(bangDiem[2]))
+            self.doubleQuaTrinh_2.setValue(bangDiem[3])
+            self.doubleGiuaKy_2.setValue(bangDiem[4])
+            self.doubleCuoiKy_2.setValue(bangDiem[5])
+        
+        self.btnClose.clicked.connect(self.close)
+        self.btnEdit.clicked.connect(partial(self.update_data, MainWindow))
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def set_selected_bangDiem(self, maSV, maHK, maMon):
+        self.selectedMaSV = maSV
+        self.selectedMaHK = maHK
+        self.selectedMaMon = maMon
+
+    def update_data(self, MainWindow):
+        current_bangDiem = myDB.select_diem_by_ids(self.idSinhvien, self.idHocky, self.idMonhoc).fetchone()
+
+        current_diemQuaTrinh = self.doubleQuaTrinh_2.value()
+        current_diemGiuaKy = self.doubleGiuaKy_2.value()
+        current_diemCuoiKy = self.doubleCuoiKy_2.value()
+
+        if current_diemQuaTrinh != current_bangDiem[3] or current_diemGiuaKy != current_bangDiem[4]\
+        or current_diemCuoiKy != current_bangDiem[5]:
+            myDB.update_diem(current_diemQuaTrinh, current_diemGiuaKy, current_diemCuoiKy, self.idSinhvien, self.idMonhoc)
+        self.MainWindow.close() 
+
+    def close(self):
+        self.MainWindow.close() 
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Chi Tiết Bảng Điểm"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.groupBox.setTitle(_translate("MainWindow", "Điểm "))
         self.label_12.setText(_translate("MainWindow", "Quá trình"))
         self.label_13.setText(_translate("MainWindow", "Giữa kỳ"))
@@ -102,10 +152,15 @@ class Ui_MainWindow(object):
         self.btnClose.setText(_translate("MainWindow", "Đóng"))
         self.btnEdit.setText(_translate("MainWindow", "Sửa"))
 
+def closeWindow():
+    global myDB
+    myDB.disconnect()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
+    app.lastWindowClosed.connect(closeWindow)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)

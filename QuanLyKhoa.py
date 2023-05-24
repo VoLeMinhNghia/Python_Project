@@ -180,7 +180,9 @@ class Ui_QuanLyKhoa(object):
         makhoa = self.IDKhoa.text().strip()
         tenkhoa = self.NameKhoa.text().strip()
 
-        if(makhoa == "" and tenkhoa == ""):
+        khoa = myDB.select_khoa_by_id(makhoa).fetchall()
+
+        if makhoa == "" or tenkhoa == "" or khoa:
              return self.load_data()
         
         # Thêm khoa vào CSDL

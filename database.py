@@ -341,6 +341,22 @@ class MY_DB():
         result = self.cur.fetchone()
         if result:
             return result[0]
+        else:   
+            return ""
+        
+    def get_ten_hoc_ky(self, maHocKy):
+        self.cur.execute("SELECT TenHocKy FROM HOCKY WHERE MaHocKy = ?", (maHocKy,))
+        result = self.cur.fetchone()
+        if result:
+            return result[0]
+        else:
+            return ""
+        
+    def get_ten_mon_hoc(self, maMonHoc):
+        self.cur.execute("SELECT TenMon FROM MONHOC WHERE MaMon = ?", (maMonHoc,))
+        result = self.cur.fetchone()
+        if result:
+            return result[0]
         else:
             return ""
 

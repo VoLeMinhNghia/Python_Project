@@ -197,18 +197,15 @@ class Ui_QuanLyNghanh(object):
         self.window.show()
 
 #-----------------------------INSERT--------------------------------------------
-#     def get_nghanh_info(self):
-#         manghanh = self.IDNghanh.text()
-#         makhoa = self.cbBoxKhoa.currentText()
-#         tennghanh = self.NameNghanh.text()
-#         return manghanh, makhoa, tennghanh
 
     def on_btnSave_clicked(self):
         maNghanh = self.IDNghanh.text().strip()
         makhoa = self.cbBoxKhoa.currentText().strip()
         tenNghanh = self.NameNghanh.text().strip()
 
-        if(maNghanh == "" and tenNghanh == ""):
+        nghanh = myDB.select_nghanh_by_id(maNghanh).fetchone()
+
+        if maNghanh == "" or tenNghanh == "" or nghanh:
              return self.load_data()
         
         # Thêm Nghanh vào CSDL
