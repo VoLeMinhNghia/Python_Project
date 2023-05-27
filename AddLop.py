@@ -66,6 +66,12 @@ class Ui_MainWindow(object):
         self.cbBoxNienKhoa = QtWidgets.QComboBox(parent=self.centralwidget)
         self.cbBoxNienKhoa.setGeometry(QtCore.QRect(110, 120, 131, 22))
         self.cbBoxNienKhoa.setObjectName("cbBoxNienKhoa")
+        self.err = QtWidgets.QLabel(parent=self.centralwidget)
+        self.err.setGeometry(QtCore.QRect(280, 90, 161, 20))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);\n"
+"font: 10pt \"Segoe UI\";")
+        self.err.setText("")
+        self.err.setObjectName("err")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 451, 22))
@@ -97,6 +103,13 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def new_window(self):
+        self.IDLop.setText("")
+        self.NameLop.setText("")
+        self.cbBoxNghanh.setCurrentIndex(0)
+        self.cbBoxNienKhoa.setCurrentIndex(0)
+        self.err.setText("")
+
     def close(self):
         self.MainWindow.close() 
 
@@ -107,8 +120,14 @@ class Ui_MainWindow(object):
         nienkhoa = self.cbBoxNienKhoa.currentText().split(" ")
         manNienkhoa = nienkhoa[0]
 
-        if(malop == "" or tenlop == ""):
-            return self.close()
+        lop = myDB.select_lop_by_id(malop).fetchone()
+        if lop != None:
+            self.err.setText("Mã lớp đã tồn tại !!")
+            return
+
+        if malop == "" or tenlop == "":
+            self.err.setText("Không bỏ trống thông tin !!")
+            return
         myDB.insert_lop(malop, manghanh, manNienkhoa, tenlop)
         self.MainWindow.close() 
 

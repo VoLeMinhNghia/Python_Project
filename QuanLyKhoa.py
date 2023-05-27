@@ -31,20 +31,20 @@ class Ui_QuanLyKhoa(object):
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
         self.label_2 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_2.setGeometry(QtCore.QRect(10, 50, 71, 16))
+        self.label_2.setGeometry(QtCore.QRect(10, 30, 71, 16))
         self.label_2.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_2.setObjectName("label_2")
         self.detailIDKhoa = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailIDKhoa.setGeometry(QtCore.QRect(80, 50, 113, 22))
+        self.detailIDKhoa.setGeometry(QtCore.QRect(80, 30, 113, 22))
         self.detailIDKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailIDKhoa.setReadOnly(True)
         self.detailIDKhoa.setObjectName("detailIDKhoa")
         self.label_3 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_3.setGeometry(QtCore.QRect(10, 110, 71, 16))
+        self.label_3.setGeometry(QtCore.QRect(10, 70, 71, 16))
         self.label_3.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_3.setObjectName("label_3")
         self.detailNameKhoa = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailNameKhoa.setGeometry(QtCore.QRect(80, 110, 161, 22))
+        self.detailNameKhoa.setGeometry(QtCore.QRect(80, 70, 161, 22))
         self.detailNameKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailNameKhoa.setReadOnly(True)
         self.detailNameKhoa.setObjectName("detailNameKhoa")
@@ -57,6 +57,21 @@ class Ui_QuanLyKhoa(object):
         self.btnDelete.setStyleSheet("background-color: rgb(170, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.btnDelete.setObjectName("btnDelete")
+        self.islock = QtWidgets.QLabel(parent=self.groupBox)
+        self.islock.setGeometry(QtCore.QRect(248, 70, 51, 21))
+        self.islock.setStyleSheet("font: 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.islock.setObjectName("islock")
+        self.err_2 = QtWidgets.QLabel(parent=self.groupBox)
+        self.err_2.setGeometry(QtCore.QRect(80, 100, 161, 20))
+        self.err_2.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err_2.setText("")
+        self.err_2.setObjectName("err_2")
+        self.label_8 = QtWidgets.QLabel(parent=self.groupBox)
+        self.label_8.setGeometry(QtCore.QRect(60, 130, 131, 41))
+        self.label_8.setStyleSheet("font: 10pt \"Segoe UI\";")
+        self.label_8.setObjectName("label_8")
         self.groupBox_2 = QtWidgets.QGroupBox(parent=self.centralwidget)
         self.groupBox_2.setGeometry(QtCore.QRect(430, 80, 361, 181))
         self.groupBox_2.setStyleSheet("background-color: rgb(255, 240, 166);\n"
@@ -89,6 +104,11 @@ class Ui_QuanLyKhoa(object):
         self.btnCancel.setGeometry(QtCore.QRect(280, 140, 61, 24))
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
         self.btnCancel.setObjectName("btnCancel")
+        self.err = QtWidgets.QLabel(parent=self.groupBox_2)
+        self.err.setGeometry(QtCore.QRect(80, 80, 150, 16))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err.setText("")
+        self.err.setObjectName("err")
         self.label_6 = QtWidgets.QLabel(parent=self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(430, 50, 131, 21))
         self.label_6.setStyleSheet("font: 700 12pt \"Segoe UI\";")
@@ -126,6 +146,8 @@ class Ui_QuanLyKhoa(object):
         self.tableKhoa.setAutoScrollMargin(16)
         self.tableKhoa.setRowCount(5)
         self.tableKhoa.setColumnCount(2)
+        self.tableKhoa.setColumnWidth(0, 150)
+        self.tableKhoa.setColumnWidth(1, 261)
         self.tableKhoa.setObjectName("tableKhoa")
         item = QtWidgets.QTableWidgetItem()
         self.tableKhoa.setHorizontalHeaderItem(0, item)
@@ -139,6 +161,7 @@ class Ui_QuanLyKhoa(object):
         self.statusbar = QtWidgets.QStatusBar(parent=QuanLyKhoa)
         self.statusbar.setObjectName("statusbar")
         QuanLyKhoa.setStatusBar(self.statusbar)
+
         self.btnHome.clicked.connect(partial(self.goHome, QuanLyKhoa))
 
         self.retranslateUi(QuanLyKhoa)
@@ -180,10 +203,15 @@ class Ui_QuanLyKhoa(object):
         makhoa = self.IDKhoa.text().strip()
         tenkhoa = self.NameKhoa.text().strip()
 
-        khoa = myDB.select_khoa_by_id(makhoa).fetchall()
+        khoa = myDB.select_khoa_by_id(makhoa).fetchone() 
 
-        if makhoa == "" or tenkhoa == "" or khoa:
-             return self.load_data()
+        if makhoa == "" or tenkhoa == "":
+            self.err.setText("Không để trống dữ liệu !!")
+            return 
+
+        if khoa != None:
+            self.err.setText("Mã khoa đã tồn tại !!")
+            return 
         
         # Thêm khoa vào CSDL
         myDB.insert_khoa(makhoa, tenkhoa)
@@ -195,9 +223,13 @@ class Ui_QuanLyKhoa(object):
     def cancel(self):
         self.IDKhoa.setText("")
         self.NameKhoa.setText("")
+        self.err.setText("")
 
 #---------------------------------- UPDATE--------------------------------------
     def on_tableKhoa_cellClicked(self, row, column):
+        self.load_data()
+        self.islock.setText("Lock")
+        self.err_2.setText("")
         # Lấy mã khoa từ dòng được click
         makhoa = self.tableKhoa.item(row, 0).text()
 
@@ -211,31 +243,23 @@ class Ui_QuanLyKhoa(object):
     def enable_edit_mode(self):
         current_id = self.detailIDKhoa.text()
         current_name = self.detailNameKhoa.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
-        else: 
-             #self.detailIDKhoa.setReadOnly(False)
-             self.detailNameKhoa.setReadOnly(False)
-
-    def current_selected_khoa(self):
-        selected_rows = self.tableKhoa.selectedIndexes()
-        if selected_rows:
-                row = selected_rows[0].row()
-                ma_khoa = self.tableKhoa.item(row, 0).text()
-                ten_khoa = self.tableKhoa.item(row, 1).text()
-                self.detailIDKhoa.setText(ma_khoa)
-                self.detailNameKhoa.setText(ten_khoa)
-                return (ma_khoa, ten_khoa)
+        if current_id == "" or current_name == "":
+            return self.load_data()
+        else:
+            self.islock.setStyleSheet("color: rgb(0, 170, 0);")
+            self.islock.setText("Unlock")
+            self.detailNameKhoa.setReadOnly(False)
 
     def reload_data(self):
         current_id = self.detailIDKhoa.text()
         current_name = self.detailNameKhoa.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
-        if not self.detailNameKhoa.isReadOnly() and \
-                (current_id, current_name) != self.current_selected_khoa():
+        current_khoa = myDB.select_khoa_by_id(current_id).fetchone()
+
+        if current_name == "":
+            self.err_2.setText("Không bỏ trống dữ liệu !!")
+            return
+        if current_name != current_khoa[1]:
                 myDB.update_khoa(current_name, current_id)
-                #self.detailIDKhoa.setReadOnly(True)
                 self.detailNameKhoa.setReadOnly(True)
         self.detailIDKhoa.setText("")
         self.detailNameKhoa.setText("")
@@ -247,10 +271,10 @@ class Ui_QuanLyKhoa(object):
         if(current_id == "" and current_name == ""):
              return self.load_data()
         else:
-             myDB.delete_khoa(current_id)
-             self.detailIDKhoa.setText("")
-             self.detailNameKhoa.setText("")
-             self.load_data()
+            myDB.delete_khoa(current_id)
+            self.detailIDKhoa.setText("")
+            self.detailNameKhoa.setText("")
+            self.load_data()
 #----------------------------------SORT--------------------------------------------------------
     def sort_table_alphabetically(self):
         # Lấy số cột trong bảng
@@ -271,6 +295,10 @@ class Ui_QuanLyKhoa(object):
                         self.tableKhoa.setItem(self.tableKhoa.rowCount() - 1, col, item)
 
     def load_data(self):
+        self.islock.setStyleSheet("color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.err_2.setText("")
+        self.detailNameKhoa.setReadOnly(True)
         self.khoaTable = myDB.select_all_khoa()
         self.tableKhoa.setRowCount(0)
         for row_num, row_data in enumerate(self.khoaTable):
@@ -287,6 +315,7 @@ class Ui_QuanLyKhoa(object):
         self.label_3.setText(_translate("QuanLyKhoa", "Tên Khoa:"))
         self.btnEdit.setText(_translate("QuanLyKhoa", "Sửa"))
         self.btnDelete.setText(_translate("QuanLyKhoa", "Xóa"))
+        self.label_8.setText(_translate("QuanLyKhoa", "Click here to unlock ->"))
         self.groupBox_2.setTitle(_translate("QuanLyKhoa", "Thêm Khoa"))
         self.label_4.setText(_translate("QuanLyKhoa", "Mã Khoa:"))
         self.label_5.setText(_translate("QuanLyKhoa", "Tên Khoa:"))

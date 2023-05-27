@@ -22,15 +22,16 @@ class Ui_MainWindow(object):
         global instance 
 
         MainWindow.setObjectName("MainWindow")
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(349, 299)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.btnCancel = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnCancel.setGeometry(QtCore.QRect(280, 220, 61, 24))
+        self.btnCancel.setGeometry(QtCore.QRect(260, 220, 61, 24))
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
         self.btnCancel.setObjectName("btnCancel")
         self.btnSave = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnSave.setGeometry(QtCore.QRect(210, 220, 61, 24))
+        self.btnSave.setGeometry(QtCore.QRect(190, 220, 61, 24))
         self.btnSave.setStyleSheet("background-color: rgb(0, 255, 127);")
         self.btnSave.setObjectName("btnSave")
         self.cbBoxMon = QtWidgets.QComboBox(parent=self.centralwidget)
@@ -57,11 +58,11 @@ class Ui_MainWindow(object):
         self.maSV.setGeometry(QtCore.QRect(100, 80, 113, 22))
         self.maSV.setObjectName("maSV")
         self.viewSV = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.viewSV.setGeometry(QtCore.QRect(220, 80, 101, 31))
+        self.viewSV.setGeometry(QtCore.QRect(230, 80, 101, 31))
         self.viewSV.setStyleSheet("font: 9pt \"Segoe UI\";")
         self.viewSV.setObjectName("viewSV")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(10, 110, 191, 141))
+        self.groupBox.setGeometry(QtCore.QRect(10, 110, 161, 141))
         self.groupBox.setStyleSheet("background-color: rgb(170, 255, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
@@ -89,6 +90,12 @@ class Ui_MainWindow(object):
         self.doubleCuoiKy.setGeometry(QtCore.QRect(80, 90, 62, 22))
         self.doubleCuoiKy.setMaximum(10.0)
         self.doubleCuoiKy.setObjectName("doubleCuoiKy")
+        self.err = QtWidgets.QLabel(parent=self.centralwidget)
+        self.err.setGeometry(QtCore.QRect(180, 190, 161, 20))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);\n"
+"font: 10pt \"Segoe UI\";")
+        self.err.setText("")
+        self.err.setObjectName("err")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 349, 22))
@@ -98,7 +105,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         
-        self.btnCancel.clicked.connect(partial(self.close, MainWindow))
+        self.btnCancel.clicked.connect(self.close)
 
         self.monTable = myDB.select_all_monhoc()
         self.cbBoxMon.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
@@ -120,11 +127,29 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def new_window(self):
+        self.cbBoxMon.setCurrentIndex(0)
+        self.cbBoxHocKy.setCurrentIndex(0)
+        self.maSV.setText("")
+        self.err.setText("")
+        self.doubleQuaTrinh.setValue(0.0)
+        self.doubleGiuaKy.setValue(0.0)
+        self.doubleCuoiKy.setValue(0.0)
+
+
     def close(self):
         self.MainWindow.close() 
 
     def on_btnSave_clicked(self, MainWindow):
         current_idSinhvien = self.maSV.text()
+        sinh_vien = myDB.select_sinhvien_by_id(current_idSinhvien).fetchone()
+        if current_idSinhvien == "": 
+            self.err.setText("Không bỏ trống !!")
+            return
+        if sinh_vien is None: 
+            self.err.setText("Sinh viên không hợp lệ !!")
+            return
+        
         current_idHocKy = self.cbBoxHocKy.currentText().split(" ")
         current_idHocKy = current_idHocKy[0]
         current_idMon = self.cbBoxMon.currentText().split(" ")
@@ -133,8 +158,9 @@ class Ui_MainWindow(object):
         current_diemGiuaKy = self.doubleGiuaKy.value()
         current_diemCuoiKy = self.doubleCuoiKy.value()
 
-        if current_diemQuaTrinh == "" or current_diemGiuaKy == "" or current_diemCuoiKy == "":
-            return self.close()
+        if current_idSinhvien == "":
+            self.err.setText("Không bỏ trống thông tin !!")
+            return
         myDB.insert_diem(current_idSinhvien, current_idHocKy, current_idMon, current_diemQuaTrinh, current_diemGiuaKy, current_diemCuoiKy)
         self.MainWindow.close() 
 
@@ -142,8 +168,11 @@ class Ui_MainWindow(object):
         global instance
         instance = self.maSV.text()
         sinh_vien = myDB.select_sinhvien_by_id(instance).fetchone()
-        if self.maSV.text() == "" or sinh_vien is None: return
+        if self.maSV.text() == "" or sinh_vien is None: 
+            self.err.setText("Sinh viên không tồn tại !!")
+            return
         if self.detailSVWindow is None:
+                self.err.setText("")
                 from DetailSV import Ui_MainWindow as Ui_MainWindow
                 self.detailSVWindow = QtWidgets.QMainWindow()
                 self.ui = Ui_MainWindow()

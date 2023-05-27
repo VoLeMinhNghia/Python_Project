@@ -110,6 +110,26 @@ class Ui_MainWindow(object):
         self.detailIDLop.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailIDLop.setReadOnly(True)
         self.detailIDLop.setObjectName("detailIDLop")
+        self.err = QtWidgets.QLabel(parent=self.centralwidget)
+        self.err.setGeometry(QtCore.QRect(270, 200, 161, 21))
+        self.err.setStyleSheet("font: 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.err.setText("")
+        self.err.setObjectName("err")
+        self.lock1 = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lock1.setGeometry(QtCore.QRect(220, 40, 21, 21))
+        self.lock1.setText("")
+        self.lock1.setPixmap(QtGui.QPixmap("images/lock.png"))
+        self.lock1.setScaledContents(True)
+        self.lock1.setWordWrap(False)
+        self.lock1.setObjectName("lock1")
+        self.lock2 = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lock2.setGeometry(QtCore.QRect(450, 40, 21, 21))
+        self.lock2.setText("")
+        self.lock2.setPixmap(QtGui.QPixmap("images/lock.png"))
+        self.lock2.setScaledContents(True)
+        self.lock2.setWordWrap(False)
+        self.lock2.setObjectName("lock2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 482, 22))
@@ -131,12 +151,13 @@ class Ui_MainWindow(object):
             date_as_datetime = date_of_birth.toPyDate()  # Chuyển đổi QDate thành đối tượng datetime.date
             self.dateOfB.setDate(date_as_datetime)  # Gán giá trị datetime.date vào QDateEdit
             gender_bit = int(SV[4])  # Lấy giá trị bit của giới tính
+            print(gender_bit)
             if gender_bit == 0:
-                self.cbBoxSex.setCurrentText("Nam")
+                self.cbBoxSex.setCurrentIndex(0)
             elif gender_bit == 1:
-                self.cbBoxSex.setCurrentText("Nữ")
+                self.cbBoxSex.setCurrentIndex(1)
             else:
-                self.cbBoxSex.setCurrentText("Khác")
+                self.cbBoxSex.setCurrentIndex(2)
             self.detailDanToc.setText(SV[5])
             self.plainTextEditDiaChi.setPlainText(SV[6])
             self.detailSDT.setText(SV[7])
@@ -170,6 +191,10 @@ class Ui_MainWindow(object):
         current_dantoc = self.detailDanToc.text()
         current_diachi = self.plainTextEditDiaChi.toPlainText()
         current_sdt = self.detailSDT.text()
+
+        if current_name == "" or current_dantoc == "" or current_diachi == "" or current_sdt == "":
+            self.err.setText("Không bỏ trống thông tin !!")
+            return
 
         if current_name != current_sinhvien[2] or current_dob != current_sinhvien[3] or current_gender != current_sinhvien[4] \
                 or current_dantoc != current_sinhvien[5] or current_diachi != current_sinhvien[6] or current_sdt != current_sinhvien[7]:

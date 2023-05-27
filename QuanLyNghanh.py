@@ -77,26 +77,31 @@ class Ui_QuanLyNghanh(object):
         self.cbBoxKhoa = QtWidgets.QComboBox(parent=self.groupBox_2)
         self.cbBoxKhoa.setGeometry(QtCore.QRect(90, 70, 111, 22))
         self.cbBoxKhoa.setObjectName("cbBoxKhoa")
+        self.err = QtWidgets.QLabel(parent=self.groupBox_2)
+        self.err.setGeometry(QtCore.QRect(210, 30, 121, 16))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err.setText("")
+        self.err.setObjectName("err")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(430, 280, 361, 181))
         self.groupBox.setStyleSheet("background-color: rgb(112, 200, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
         self.label_2 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_2.setGeometry(QtCore.QRect(10, 70, 71, 16))
+        self.label_2.setGeometry(QtCore.QRect(10, 60, 71, 16))
         self.label_2.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_2.setObjectName("label_2")
-        self.detailIDhoa = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailIDhoa.setGeometry(QtCore.QRect(90, 70, 113, 22))
-        self.detailIDhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
-        self.detailIDhoa.setReadOnly(True)
-        self.detailIDhoa.setObjectName("detailIDhoa")
+        self.detailIDKhoa = QtWidgets.QLineEdit(parent=self.groupBox)
+        self.detailIDKhoa.setGeometry(QtCore.QRect(90, 60, 113, 22))
+        self.detailIDKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
+        self.detailIDKhoa.setReadOnly(True)
+        self.detailIDKhoa.setObjectName("detailIDKhoa")
         self.label_3 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_3.setGeometry(QtCore.QRect(10, 100, 71, 41))
+        self.label_3.setGeometry(QtCore.QRect(10, 80, 71, 41))
         self.label_3.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_3.setObjectName("label_3")
         self.detailNameNghanh = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailNameNghanh.setGeometry(QtCore.QRect(90, 110, 161, 22))
+        self.detailNameNghanh.setGeometry(QtCore.QRect(90, 90, 161, 22))
         self.detailNameNghanh.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailNameNghanh.setReadOnly(True)
         self.detailNameNghanh.setObjectName("detailNameNghanh")
@@ -118,6 +123,21 @@ class Ui_QuanLyNghanh(object):
         self.detailIDNghanh.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailIDNghanh.setReadOnly(True)
         self.detailIDNghanh.setObjectName("detailIDNghanh")
+        self.islock = QtWidgets.QLabel(parent=self.groupBox)
+        self.islock.setGeometry(QtCore.QRect(260, 90, 51, 21))
+        self.islock.setStyleSheet("font: 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.islock.setObjectName("islock")
+        self.err_2 = QtWidgets.QLabel(parent=self.groupBox)
+        self.err_2.setGeometry(QtCore.QRect(90, 115, 161, 21))
+        self.err_2.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err_2.setText("")
+        self.err_2.setObjectName("err_2")
+        self.label_10 = QtWidgets.QLabel(parent=self.groupBox)
+        self.label_10.setGeometry(QtCore.QRect(60, 140, 141, 21))
+        self.label_10.setStyleSheet("font: 10pt \"Segoe UI\";")
+        self.label_10.setObjectName("label_10")
         self.btnReload = QtWidgets.QPushButton(parent=self.centralwidget)
         self.btnReload.setGeometry(QtCore.QRect(430, 480, 91, 31))
         self.btnReload.setStyleSheet("background-color: rgb(16, 16, 255);\n"
@@ -141,6 +161,9 @@ class Ui_QuanLyNghanh(object):
         self.tableNghanh.setGeometry(QtCore.QRect(10, 80, 411, 471))
         self.tableNghanh.setRowCount(5)
         self.tableNghanh.setColumnCount(3)
+        self.tableNghanh.setColumnWidth(0, 100)
+        self.tableNghanh.setColumnWidth(1, 100)
+        self.tableNghanh.setColumnWidth(2, 211)
         self.tableNghanh.setObjectName("tableNghanh")
         item = QtWidgets.QTableWidgetItem()
         self.tableNghanh.setHorizontalHeaderItem(0, item)
@@ -187,6 +210,7 @@ class Ui_QuanLyNghanh(object):
         self.btnCancel.clicked.connect(self.cancel)
 
         self.btnDelete.clicked.connect(self.delete)
+        self.btnSort.clicked.connect(self.sort_table_alphabetically)
 
     def goHome(self, QuanLyNghanh):
         from MainWindow import Ui_MainWindow as Ui_MainWindow
@@ -205,9 +229,12 @@ class Ui_QuanLyNghanh(object):
 
         nghanh = myDB.select_nghanh_by_id(maNghanh).fetchone()
 
-        if maNghanh == "" or tenNghanh == "" or nghanh:
-             return self.load_data()
-        
+        if maNghanh == "" or tenNghanh == "": 
+             self.err.setText("Không bỏ trống !!")
+             return 
+        if nghanh != None:
+             self.err.setText("Mã nghành đã tồn tại")
+             return
         # Thêm Nghanh vào CSDL
         myDB.insert_nghanh(maNghanh, makhoa, tenNghanh)
         self.cancel()
@@ -218,9 +245,13 @@ class Ui_QuanLyNghanh(object):
     def cancel(self):
         self.IDNghanh.setText("")
         self.NameNghanh.setText("")
+        self.err.setText("")
 
 #---------------------------------- UPDATE--------------------------------------
     def on_tableNghanh_cellClicked(self, row, column):
+        self.load_data()
+        self.islock.setText("Lock")
+        self.err_2.setText("")
         # Lấy mã Nghanh từ dòng được click
         maNghanh = self.tableNghanh.item(row, 0).text()
 
@@ -229,67 +260,78 @@ class Ui_QuanLyNghanh(object):
 
         # Hiển thị thông tin Nghanh trong groupBox
         self.detailIDNghanh.setText(Nghanh[0])
-        self.detailIDhoa.setText(Nghanh[1])
+        self.detailIDKhoa.setText(Nghanh[1])
         self.detailNameNghanh.setText(Nghanh[2])
 
     def enable_edit_mode(self):
         current_id = self.detailIDNghanh.text()
         current_name = self.detailNameNghanh.text()
-        if(current_id == "" and current_name == ""):
+        if current_id == "" or current_name == "":
              return self.load_data()
         else: 
-             #self.detailIDNghanh.setReadOnly(False)
+             self.islock.setStyleSheet("color: rgb(0, 170, 0);")
+             self.islock.setText("Unlock")
              self.detailNameNghanh.setReadOnly(False)
-
-    def current_selected_Nghanh(self):
-        selected_rows = self.tableNghanh.selectedIndexes()
-        if selected_rows:
-                row = selected_rows[0].row()
-                ma_Nghanh = self.tableNghanh.item(row, 0).text()
-                ma_Khoa = self.tableNghanh.item(row, 1).text()
-                ten_Nghanh = self.tableNghanh.item(row, 2).text()
-                self.detailIDNghanh.setText(ma_Nghanh)
-                self.detailIDhoa.setText(ma_Khoa)
-                self.detailNameNghanh.setText(ten_Nghanh)
-                return (ma_Nghanh, ma_Khoa, ten_Nghanh)
 
     def reload_data(self):
         current_id = self.detailIDNghanh.text()
-        current_khoa = self.detailIDhoa.text()
         current_name = self.detailNameNghanh.text()
-        # print(self.current_selected_Nghanh())
-        if(current_id == "" and current_name == "" and current_khoa == ""):
-             return self.load_data()
-        if not self.detailNameNghanh.isReadOnly() and \
-                (current_id, current_khoa, current_name) != self.current_selected_Nghanh():
+
+        current_nghanh = myDB.select_nghanh_by_id(current_id).fetchone()
+        
+        if current_nghanh == None:
+                self.err_2.setText("Dữ liệu trống !!")
+                return
+        if current_name != current_nghanh[2]:
                 myDB.update_nghanh(current_name, current_id)
                 self.detailNameNghanh.setReadOnly(True)
         self.detailIDNghanh.setText("")
-        self.detailIDhoa.setText("")
+        self.detailIDKhoa.setText("")
         self.detailNameNghanh.setText("")
         self.load_data()
 
 #-----------------------------------DELETE----------------------------------------------------
     def delete(self):
         current_id = self.detailIDNghanh.text()
-        current_khoa = self.detailIDhoa.text()
         current_name = self.detailNameNghanh.text()
-        if(current_id == "" and current_name == ""):
+        if current_name == "":
              return self.load_data()
         else:
              myDB.delete_nghanh(current_id)
              self.detailIDNghanh.setText("")
-             self.detailIDhoa.setText("")
+             self.detailIDKhoa.setText("")
              self.detailNameNghanh.setText("")
              self.load_data()
 
     def load_data(self):
+        self.islock.setStyleSheet("color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.err_2.setText("")
+        self.detailNameNghanh.setReadOnly(True)
         self.NghanhTable = myDB.select_all_nghanh()
         self.tableNghanh.setRowCount(0)
         for row_num, row_data in enumerate(self.NghanhTable):
                 self.tableNghanh.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                      self.tableNghanh.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
+    def sort_table_alphabetically(self):
+        # Lấy số cột trong bảng
+        column_count = self.tableNghanh.columnCount()
+        # Lấy số hàng trong bảng
+        row_count = self.tableNghanh.rowCount()
+        # Tạo một danh sách các dòng trong bảng, mỗi dòng là một list các giá trị trong ô
+        rows = [[self.tableNghanh.item(row, col).text() for col in range(column_count)] for row in range(row_count)]
+        # Sắp xếp các dòng theo thứ tự tăng dần của cột tên khoa (cột thứ hai)
+        sorted_rows = sorted(rows, key=lambda row: row[2])
+        # Xóa tất cả các hàng cũ trong bảng
+        self.tableNghanh.setRowCount(0)
+        # Thêm các hàng đã sắp xếp vào bảng
+        for row in sorted_rows:
+                self.tableNghanh.insertRow(self.tableNghanh.rowCount())
+                for col, value in enumerate(row):
+                        item = QtWidgets.QTableWidgetItem(value)
+                        self.tableNghanh.setItem(self.tableNghanh.rowCount() - 1, col, item)
 
     def retranslateUi(self, QuanLyNghanh):
         _translate = QtCore.QCoreApplication.translate
@@ -307,6 +349,7 @@ class Ui_QuanLyNghanh(object):
         self.label_2.setText(_translate("QuanLyNghanh", "Mã Khoa:"))
         self.label_3.setText(_translate("QuanLyNghanh", "Tên Nghành:"))
         self.btnEdit.setText(_translate("QuanLyNghanh", "Sửa"))
+        self.label_10.setText(_translate("QuanLyNghanh", "Click here to unlock ->"))
         self.btnDelete.setText(_translate("QuanLyNghanh", "Xóa"))
         self.label_9.setText(_translate("QuanLyNghanh", "Mã Nghành:"))
         self.btnReload.setText(_translate("QuanLyNghanh", "Cập Nhật"))

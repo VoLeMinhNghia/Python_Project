@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
         self.label_4.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(parent=self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(240, 40, 49, 16))
+        self.label_5.setGeometry(QtCore.QRect(250, 40, 49, 16))
         self.label_5.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_5.setObjectName("label_5")
         self.detailIDLop = QtWidgets.QLineEdit(parent=self.centralwidget)
@@ -71,6 +71,33 @@ class Ui_MainWindow(object):
         self.detailIDNienKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailIDNienKhoa.setReadOnly(True)
         self.detailIDNienKhoa.setObjectName("detailIDNienKhoa")
+        self.err = QtWidgets.QLabel(parent=self.centralwidget)
+        self.err.setGeometry(QtCore.QRect(280, 90, 161, 20))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);\n"
+"font: 10pt \"Segoe UI\";")
+        self.err.setText("")
+        self.err.setObjectName("err")
+        self.lock1 = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lock1.setGeometry(QtCore.QRect(220, 40, 21, 21))
+        self.lock1.setText("")
+        self.lock1.setPixmap(QtGui.QPixmap("images/lock.png"))
+        self.lock1.setScaledContents(True)
+        self.lock1.setWordWrap(False)
+        self.lock1.setObjectName("lock1")
+        self.lock2 = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lock2.setGeometry(QtCore.QRect(220, 80, 21, 21))
+        self.lock2.setText("")
+        self.lock2.setPixmap(QtGui.QPixmap("images/lock.png"))
+        self.lock2.setScaledContents(True)
+        self.lock2.setWordWrap(False)
+        self.lock2.setObjectName("lock2")
+        self.lock2_2 = QtWidgets.QLabel(parent=self.centralwidget)
+        self.lock2_2.setGeometry(QtCore.QRect(220, 120, 21, 21))
+        self.lock2_2.setText("")
+        self.lock2_2.setPixmap(QtGui.QPixmap("images/lock.png"))
+        self.lock2_2.setScaledContents(True)
+        self.lock2_2.setWordWrap(False)
+        self.lock2_2.setObjectName("lock2_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 453, 22))
@@ -104,11 +131,13 @@ class Ui_MainWindow(object):
         current_id = self.detailIDLop.text()
         current_name = self.detailNameLop.text()
         current_lop =  myDB.select_lop_by_id(current_id).fetchone()
+
+        if current_name == "":
+            self.err.setText("Không bỏ trống thông tin !!")
+            return
+        
         if current_name != current_lop[3]:
             myDB.update_lop(current_name, current_id)
-            # quan_ly_lop_ui =  Ui_MainWindow()
-            # quan_ly_lop_ui.load_TableLop()
-        # Đóng cửa sổ DetailLop
         self.MainWindow.close() 
         
     def close(self):

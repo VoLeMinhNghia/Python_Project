@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         myDB.connect()
 
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(664, 594)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
@@ -26,91 +26,80 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet("font: 700 12pt \"Segoe UI\";")
         self.label.setObjectName("label")
         self.groupBox_2 = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(430, 70, 221, 181))
+        self.groupBox_2.setGeometry(QtCore.QRect(430, 70, 221, 151))
         self.groupBox_2.setStyleSheet("background-color: rgb(255, 240, 166);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox_2.setObjectName("groupBox_2")
         self.label_5 = QtWidgets.QLabel(parent=self.groupBox_2)
-        self.label_5.setGeometry(QtCore.QRect(10, 50, 101, 16))
+        self.label_5.setGeometry(QtCore.QRect(10, 30, 101, 16))
         self.label_5.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_5.setObjectName("label_5")
         self.NameNienKhoa = QtWidgets.QLineEdit(parent=self.groupBox_2)
-        self.NameNienKhoa.setGeometry(QtCore.QRect(40, 80, 161, 22))
+        self.NameNienKhoa.setGeometry(QtCore.QRect(10, 60, 161, 22))
         self.NameNienKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.NameNienKhoa.setReadOnly(False)
         self.NameNienKhoa.setObjectName("NameNienKhoa")
         self.btnSave = QtWidgets.QPushButton(parent=self.groupBox_2)
-        self.btnSave.setGeometry(QtCore.QRect(40, 130, 61, 24))
+        self.btnSave.setGeometry(QtCore.QRect(60, 110, 61, 24))
         self.btnSave.setStyleSheet("background-color: rgb(0, 255, 127);")
         self.btnSave.setObjectName("btnSave")
         self.btnCancel = QtWidgets.QPushButton(parent=self.groupBox_2)
-        self.btnCancel.setGeometry(QtCore.QRect(140, 130, 61, 24))
+        self.btnCancel.setGeometry(QtCore.QRect(140, 110, 61, 24))
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
         self.btnCancel.setObjectName("btnCancel")
-        self.label_8 = QtWidgets.QLabel(parent=self.groupBox_2)
-        self.label_8.setGeometry(QtCore.QRect(10, 30, 101, 16))
-        self.label_8.setStyleSheet("font: 10pt \"Segoe UI\";")
-        self.label_8.setText("")
-        self.label_8.setObjectName("label_8")
+        self.err = QtWidgets.QLabel(parent=self.groupBox_2)
+        self.err.setGeometry(QtCore.QRect(10, 90, 161, 16))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);\n"
+"font: 9pt \"Segoe UI\";")
+        self.err.setText("")
+        self.err.setObjectName("err")
         self.label_6 = QtWidgets.QLabel(parent=self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(430, 40, 131, 21))
         self.label_6.setStyleSheet("font: 700 12pt \"Segoe UI\";")
         self.label_6.setObjectName("label_6")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(430, 260, 221, 181))
+        self.groupBox.setGeometry(QtCore.QRect(430, 230, 221, 131))
         self.groupBox.setStyleSheet("background-color: rgb(112, 200, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
         self.detailNameNienKhoa = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailNameNienKhoa.setGeometry(QtCore.QRect(40, 70, 161, 22))
+        self.detailNameNienKhoa.setGeometry(QtCore.QRect(100, 60, 101, 22))
         self.detailNameNienKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailNameNienKhoa.setReadOnly(True)
         self.detailNameNienKhoa.setObjectName("detailNameNienKhoa")
-        self.btnEdit = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnEdit.setGeometry(QtCore.QRect(40, 110, 61, 24))
-        self.btnEdit.setStyleSheet("background-color: rgb(255, 170, 0);")
-        self.btnEdit.setObjectName("btnEdit")
         self.btnDelete = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnDelete.setGeometry(QtCore.QRect(140, 110, 61, 24))
+        self.btnDelete.setGeometry(QtCore.QRect(140, 90, 61, 24))
         self.btnDelete.setStyleSheet("background-color: rgb(170, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.btnDelete.setObjectName("btnDelete")
         self.label_7 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_7.setGeometry(QtCore.QRect(10, 40, 101, 16))
+        self.label_7.setGeometry(QtCore.QRect(10, 60, 91, 16))
         self.label_7.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_7.setObjectName("label_7")
         self.label_9 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_9.setGeometry(QtCore.QRect(10, 20, 101, 16))
+        self.label_9.setGeometry(QtCore.QRect(10, 30, 101, 16))
         self.label_9.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_9.setObjectName("label_9")
         self.detailIDNienKhoa = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailIDNienKhoa.setGeometry(QtCore.QRect(100, 20, 91, 22))
+        self.detailIDNienKhoa.setGeometry(QtCore.QRect(100, 30, 101, 22))
         self.detailIDNienKhoa.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailIDNienKhoa.setReadOnly(True)
         self.detailIDNienKhoa.setObjectName("detailIDNienKhoa")
-        self.btnReload = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnReload.setGeometry(QtCore.QRect(670, 410, 91, 31))
-        self.btnReload.setStyleSheet("background-color: rgb(16, 16, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"color: rgb(255, 255, 255);")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/ic/icreload.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btnReload.setIcon(icon)
-        self.btnReload.setIconSize(QtCore.QSize(20, 20))
-        self.btnReload.setObjectName("btnReload")
         self.btnHome = QtWidgets.QPushButton(parent=self.centralwidget)
         self.btnHome.setGeometry(QtCore.QRect(10, 0, 71, 31))
         self.btnHome.setStyleSheet("font: 10pt \"Segoe UI\";\n"
 "background-color: rgb(255, 255, 127);")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/ic/icHome.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btnHome.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/ic/icHome.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btnHome.setIcon(icon)
         self.btnHome.setIconSize(QtCore.QSize(20, 20))
         self.btnHome.setObjectName("btnHome")
         self.tableNienKhoa = QtWidgets.QTableWidget(parent=self.centralwidget)
         self.tableNienKhoa.setGeometry(QtCore.QRect(10, 60, 411, 491))
         self.tableNienKhoa.setRowCount(5)
         self.tableNienKhoa.setColumnCount(2)
+        self.tableNienKhoa.setColumnWidth(0, 150)
+        self.tableNienKhoa.setColumnWidth(1, 261)
         self.tableNienKhoa.setObjectName("tableNienKhoa")
         item = QtWidgets.QTableWidgetItem()
         self.tableNienKhoa.setHorizontalHeaderItem(0, item)
@@ -118,7 +107,7 @@ class Ui_MainWindow(object):
         self.tableNienKhoa.setHorizontalHeaderItem(1, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 664, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
@@ -139,8 +128,6 @@ class Ui_MainWindow(object):
                      self.tableNienKhoa.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
         
         self.tableNienKhoa.cellClicked.connect(self.on_tableNienKhoa_cellClicked)
-        self.btnEdit.clicked.connect(self.enable_edit_mode)
-        self.btnReload.clicked.connect(self.reload_data)
 
         self.btnSave.clicked.connect(self.on_btnSave_clicked)
         self.btnCancel.clicked.connect(self.cancel)
@@ -163,8 +150,9 @@ class Ui_MainWindow(object):
     def on_btnSave_clicked(self):
         tenNienKhoa = self.NameNienKhoa.text().strip()
 
-        if(tenNienKhoa == ""):
-             return self.load_data()
+        if tenNienKhoa == "":
+            self.err.setText("Không bỏ trống dữ liệu !!")
+            return
         # Thêm niên khóa vào CSDL
         myDB.insert_nienkhoa(tenNienKhoa)
         self.cancel()
@@ -174,8 +162,8 @@ class Ui_MainWindow(object):
 
     def cancel(self):
         self.NameNienKhoa.setText("")
+        self.err.setText("")
 
-#---------------------------------- UPDATE--------------------------------------
     def on_tableNienKhoa_cellClicked(self, row, column):
         # Lấy mã khoa từ dòng được click
         manienKhoa = self.tableNienKhoa.item(row, 0).text()
@@ -186,37 +174,6 @@ class Ui_MainWindow(object):
         # Hiển thị thông tin nienKhoa trong groupBox
         self.detailIDNienKhoa.setText(str(nienKhoa[0]))
         self.detailNameNienKhoa.setText(nienKhoa[1])
-
-    def enable_edit_mode(self):
-        current_name = self.detailNameNienKhoa.text()
-        if(current_name == ""):
-             return self.load_data()
-        else: 
-             self.detailNameNienKhoa.setReadOnly(False)
-
-    def current_selected_nienkhoa(self):
-        selected_rows = self.tableNienKhoa.selectedIndexes()
-        if selected_rows:
-                row = selected_rows[0].row()
-                ma_NienKhoa = self.tableNienKhoa.item(row, 0).text()
-                ten_NienKhoa = self.tableNienKhoa.item(row, 1).text()
-                self.detailIDNienKhoa.setText(ma_NienKhoa)
-                self.detailNameNienKhoa.setText(ten_NienKhoa)
-                return (ma_NienKhoa, ten_NienKhoa)
-
-    def reload_data(self):
-        current_id = self.detailIDNienKhoa.text()
-        current_name = self.detailNameNienKhoa.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
-        if not self.detailNameNienKhoa.isReadOnly() and \
-                (current_id, current_name) != self.current_selected_nienkhoa():
-                myDB.update_nienkhoa(current_name, current_id)
-                self.detailNameNienKhoa.setReadOnly(True)
-        self.detailIDNienKhoa.setText("")
-        self.detailNameNienKhoa.setText("")
-        self.load_data()
-
 #-----------------------------------DELETE----------------------------------------------------
     def delete(self):
         current_id = self.detailIDNienKhoa.text()
@@ -229,6 +186,7 @@ class Ui_MainWindow(object):
              self.load_data()
 
     def load_data(self):
+        self.err.setText("")
         self.nienKhoaTable = myDB.select_all_nienkhoa()
         self.tableNienKhoa.setRowCount(0)
         for row_num, row_data in enumerate(self.nienKhoaTable):
@@ -246,11 +204,9 @@ class Ui_MainWindow(object):
         self.btnCancel.setText(_translate("MainWindow", "Hủy"))
         self.label_6.setText(_translate("MainWindow", "Chức Năng"))
         self.groupBox.setTitle(_translate("MainWindow", "Thông Tin Chi Tiết"))
-        self.btnEdit.setText(_translate("MainWindow", "Sửa"))
         self.btnDelete.setText(_translate("MainWindow", "Xóa"))
         self.label_7.setText(_translate("MainWindow", "Tên Niên Khóa: "))
         self.label_9.setText(_translate("MainWindow", "Mã Niên Khóa"))
-        self.btnReload.setText(_translate("MainWindow", "Cập Nhật"))
         self.btnHome.setText(_translate("MainWindow", "Home"))
         item = self.tableNienKhoa.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Mã niên khóa"))

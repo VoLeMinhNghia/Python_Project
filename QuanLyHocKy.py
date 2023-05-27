@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     global myDB
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(631, 600)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(parent=self.centralwidget)
@@ -23,26 +23,22 @@ class Ui_MainWindow(object):
         self.label.setStyleSheet("font: 700 12pt \"Segoe UI\";")
         self.label.setObjectName("label")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(430, 270, 221, 181))
+        self.groupBox.setGeometry(QtCore.QRect(430, 230, 191, 151))
         self.groupBox.setStyleSheet("background-color: rgb(112, 200, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
         self.detailNameHocKy = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.detailNameHocKy.setGeometry(QtCore.QRect(40, 70, 161, 22))
+        self.detailNameHocKy.setGeometry(QtCore.QRect(40, 80, 131, 22))
         self.detailNameHocKy.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.detailNameHocKy.setReadOnly(True)
         self.detailNameHocKy.setObjectName("detailNameHocKy")
-        self.btnEdit = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnEdit.setGeometry(QtCore.QRect(40, 110, 61, 24))
-        self.btnEdit.setStyleSheet("background-color: rgb(255, 170, 0);")
-        self.btnEdit.setObjectName("btnEdit")
         self.btnDelete = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnDelete.setGeometry(QtCore.QRect(140, 110, 61, 24))
+        self.btnDelete.setGeometry(QtCore.QRect(120, 120, 61, 24))
         self.btnDelete.setStyleSheet("background-color: rgb(170, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.btnDelete.setObjectName("btnDelete")
         self.label_7 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_7.setGeometry(QtCore.QRect(10, 40, 101, 16))
+        self.label_7.setGeometry(QtCore.QRect(10, 50, 71, 21))
         self.label_7.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(parent=self.groupBox)
@@ -55,37 +51,32 @@ class Ui_MainWindow(object):
         self.detailIDHocKy.setReadOnly(True)
         self.detailIDHocKy.setObjectName("detailIDHocKy")
         self.groupBox_2 = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(430, 80, 221, 181))
+        self.groupBox_2.setGeometry(QtCore.QRect(430, 80, 191, 141))
         self.groupBox_2.setStyleSheet("background-color: rgb(255, 240, 166);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox_2.setObjectName("groupBox_2")
         self.label_5 = QtWidgets.QLabel(parent=self.groupBox_2)
-        self.label_5.setGeometry(QtCore.QRect(10, 50, 101, 16))
+        self.label_5.setGeometry(QtCore.QRect(10, 30, 101, 16))
         self.label_5.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_5.setObjectName("label_5")
         self.NameHocKy = QtWidgets.QLineEdit(parent=self.groupBox_2)
-        self.NameHocKy.setGeometry(QtCore.QRect(40, 80, 161, 22))
+        self.NameHocKy.setGeometry(QtCore.QRect(10, 50, 161, 22))
         self.NameHocKy.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.NameHocKy.setReadOnly(False)
         self.NameHocKy.setObjectName("NameHocKy")
         self.btnSave = QtWidgets.QPushButton(parent=self.groupBox_2)
-        self.btnSave.setGeometry(QtCore.QRect(40, 130, 61, 24))
+        self.btnSave.setGeometry(QtCore.QRect(40, 110, 61, 24))
         self.btnSave.setStyleSheet("background-color: rgb(0, 255, 127);")
         self.btnSave.setObjectName("btnSave")
         self.btnCancel = QtWidgets.QPushButton(parent=self.groupBox_2)
-        self.btnCancel.setGeometry(QtCore.QRect(140, 130, 61, 24))
+        self.btnCancel.setGeometry(QtCore.QRect(110, 110, 61, 24))
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
         self.btnCancel.setObjectName("btnCancel")
-        self.btnReload = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnReload.setGeometry(QtCore.QRect(670, 420, 91, 31))
-        self.btnReload.setStyleSheet("background-color: rgb(16, 16, 255);\n"
-"font: 10pt \"Segoe UI\";\n"
-"color: rgb(255, 255, 255);")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/ic/icreload.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btnReload.setIcon(icon)
-        self.btnReload.setIconSize(QtCore.QSize(20, 20))
-        self.btnReload.setObjectName("btnReload")
+        self.err = QtWidgets.QLabel(parent=self.groupBox_2)
+        self.err.setGeometry(QtCore.QRect(10, 80, 161, 16))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err.setText("")
+        self.err.setObjectName("err")
         self.label_6 = QtWidgets.QLabel(parent=self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(430, 50, 131, 21))
         self.label_6.setStyleSheet("font: 700 12pt \"Segoe UI\";")
@@ -94,15 +85,17 @@ class Ui_MainWindow(object):
         self.btnHome.setGeometry(QtCore.QRect(10, 10, 71, 31))
         self.btnHome.setStyleSheet("font: 10pt \"Segoe UI\";\n"
 "background-color: rgb(255, 255, 127);")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/ic/icHome.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.btnHome.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/ic/icHome.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.btnHome.setIcon(icon)
         self.btnHome.setIconSize(QtCore.QSize(20, 20))
         self.btnHome.setObjectName("btnHome")
         self.tableHocKy = QtWidgets.QTableWidget(parent=self.centralwidget)
         self.tableHocKy.setGeometry(QtCore.QRect(10, 80, 411, 471))
         self.tableHocKy.setRowCount(5)
         self.tableHocKy.setColumnCount(2)
+        self.tableHocKy.setColumnWidth(0, 150)
+        self.tableHocKy.setColumnWidth(1, 250)
         self.tableHocKy.setObjectName("tableHocKy")
         item = QtWidgets.QTableWidgetItem()
         self.tableHocKy.setHorizontalHeaderItem(0, item)
@@ -110,7 +103,7 @@ class Ui_MainWindow(object):
         self.tableHocKy.setHorizontalHeaderItem(1, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 631, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
@@ -132,8 +125,6 @@ class Ui_MainWindow(object):
                      self.tableHocKy.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
         
         self.tableHocKy.cellClicked.connect(self.on_tableHocKy_cellClicked)
-        self.btnEdit.clicked.connect(self.enable_edit_mode)
-        self.btnReload.clicked.connect(self.reload_data)
 
         self.btnSave.clicked.connect(self.on_btnSave_clicked)
         self.btnCancel.clicked.connect(self.cancel)
@@ -149,26 +140,21 @@ class Ui_MainWindow(object):
         self.window.show()
 
 #-----------------------------INSERT--------------------------------------------
-    # def get_HocKy_info(self):
-    #     tenHocKy = self.NameHocKy.text()
-    #     return tenHocKy
-
     def on_btnSave_clicked(self):
-        tenHocKy = self.NameHocKy.text().strip()
+        tenHocKy = self.NameHocKy.text()
 
-        if(tenHocKy == ""):
-             return self.load_data()
+        if tenHocKy == "":
+            self.err.setText("Không bỏ trống dữ liệu !!")
+            return
         # Thêm niên khóa vào CSDL
         myDB.insert_hocky(tenHocKy)
         self.cancel()
-        # # Thông báo thành công
-        # QtWidgets.QMessageBox.information(self, "Thông báo", f"Thêm khoa {makhoa} thành công.")
         self.load_data()
 
     def cancel(self):
         self.NameHocKy.setText("")
+        self.err.setText("")
 
-#---------------------------------- UPDATE--------------------------------------
     def on_tableHocKy_cellClicked(self, row, column):
         # Lấy mã khoa từ dòng được click
         maHocKy = self.tableHocKy.item(row, 0).text()
@@ -179,36 +165,6 @@ class Ui_MainWindow(object):
         # Hiển thị thông tin HocKy trong groupBox
         self.detailIDHocKy.setText(str(HocKy[0]))
         self.detailNameHocKy.setText(HocKy[1])
-
-    def enable_edit_mode(self):
-        current_name = self.detailNameHocKy.text()
-        if(current_name == ""):
-             return self.load_data()
-        else: 
-             self.detailNameHocKy.setReadOnly(False)
-
-    def current_selected_HocKy(self):
-        selected_rows = self.tableHocKy.selectedIndexes()
-        if selected_rows:
-                row = selected_rows[0].row()
-                ma_HocKy = self.tableHocKy.item(row, 0).text()
-                ten_HocKy = self.tableHocKy.item(row, 1).text()
-                self.detailIDHocKy.setText(ma_HocKy)
-                self.detailNameHocKy.setText(ten_HocKy)
-                return (ma_HocKy, ten_HocKy)
-
-    def reload_data(self):
-        current_id = self.detailIDHocKy.text()
-        current_name = self.detailNameHocKy.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
-        if not self.detailNameHocKy.isReadOnly() and \
-                (current_id, current_name) != self.current_selected_HocKy():
-                myDB.update_hocky(current_name, current_id)
-                self.detailNameHocKy.setReadOnly(True)
-        self.detailIDHocKy.setText("")
-        self.detailNameHocKy.setText("")
-        self.load_data()
 
 #-----------------------------------DELETE----------------------------------------------------
     def delete(self):
@@ -223,6 +179,7 @@ class Ui_MainWindow(object):
 
     def load_data(self):
         self.hocKyTable = myDB.select_all_hocky()
+        self.err.setText("")
         self.tableHocKy.setRowCount(0)
         for row_num, row_data in enumerate(self.hocKyTable):
                 self.tableHocKy.insertRow(row_num)
@@ -234,7 +191,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Quản Lý Học Kỳ"))
         self.label.setText(_translate("MainWindow", "QUẢN LÝ HỌC KỲ"))
         self.groupBox.setTitle(_translate("MainWindow", "Thông tin chi tiết"))
-        self.btnEdit.setText(_translate("MainWindow", "Sửa"))
         self.btnDelete.setText(_translate("MainWindow", "Xóa"))
         self.label_7.setText(_translate("MainWindow", "Tên Học Kỳ"))
         self.label_8.setText(_translate("MainWindow", "Mã Học Kỳ"))
@@ -242,7 +198,6 @@ class Ui_MainWindow(object):
         self.label_5.setText(_translate("MainWindow", "Tên Học Kỳ: "))
         self.btnSave.setText(_translate("MainWindow", "Lưu"))
         self.btnCancel.setText(_translate("MainWindow", "Hủy"))
-        self.btnReload.setText(_translate("MainWindow", "Cập Nhật"))
         self.label_6.setText(_translate("MainWindow", "Chức Năng"))
         self.btnHome.setText(_translate("MainWindow", "Home"))
         item = self.tableHocKy.horizontalHeaderItem(0)

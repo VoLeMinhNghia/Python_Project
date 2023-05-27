@@ -7,6 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import QDate
 from functools import partial
 from database import *
 
@@ -90,6 +91,12 @@ class Ui_MainWindow(object):
         self.btnSave.setGeometry(QtCore.QRect(270, 230, 61, 24))
         self.btnSave.setStyleSheet("background-color: rgb(0, 255, 127);")
         self.btnSave.setObjectName("btnSave")
+        self.errAddSV = QtWidgets.QLabel(parent=self.centralwidget)
+        self.errAddSV.setGeometry(QtCore.QRect(270, 190, 151, 31))
+        self.errAddSV.setStyleSheet("color: rgb(170, 0, 0);\n"
+"font: 10pt \"Segoe UI\";")
+        self.errAddSV.setText("")
+        self.errAddSV.setObjectName("errAddSV")
         self.btnCancel = QtWidgets.QPushButton(parent=self.centralwidget)
         self.btnCancel.setGeometry(QtCore.QRect(360, 230, 61, 24))
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
@@ -103,7 +110,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.btnCancel.clicked.connect(partial(self.close, MainWindow))
+        self.btnCancel.clicked.connect(self.close)
 
         self.lopTable = myDB.select_all_lop()
         self.cbBoxLop.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
@@ -136,16 +143,30 @@ class Ui_MainWindow(object):
         current_sdt = self.detailSDT.text()
 
         if current_name == "" or current_dantoc == "" or current_diachi == "" or current_sdt == "":
-            return self.close()
+            self.errAddSV.setText("Không bỏ trống thông tin !!")
+            return
+
         myDB.insert_sinhvien(current_IDLop, current_name, current_dob, current_gender, current_dantoc, current_diachi, current_sdt)
         self.MainWindow.close() 
+
+    def new_window(self):
+        self.cbBoxLop.setCurrentIndex(0)
+        self.NameSV.setText("")
+        self.cbBoxSex.setCurrentIndex(0)
+        self.plainTextEditDiaChi.setPlainText("")
+        # Lấy ngày hiện tại
+        ngay_hien_tai = QDate.currentDate()
+        self.dateOfB.setDate(ngay_hien_tai)
+        self.detailDanToc.setText("")
+        self.detailSDT.setText("")
+        self.errAddSV.setText("")
 
     def close(self):
         self.MainWindow.close() 
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Thêm Sinh Viến"))
         self.cbBoxSex.setItemText(0, _translate("MainWindow", "Nam"))
         self.cbBoxSex.setItemText(1, _translate("MainWindow", "Nữ"))
         self.cbBoxSex.setItemText(2, _translate("MainWindow", "Khác"))

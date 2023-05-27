@@ -242,6 +242,12 @@ class MY_DB():
         rows = self.cur
         return rows
 
+    def select_diem_by_hockyAndMon(self, mahocky, mamon):
+        self.cur.execute("SELECT * FROM DIEM WHERE MaHocKy = ? AND MaMon = ?", (mahocky, mamon))
+        rows = self.cur
+        return rows
+
+
     #-----------------------------SELECT ALL------------------------------------------
 
     def select_all_khoa(self):

@@ -157,7 +157,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Ứng Dụng Quản Lý"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Hệ Thống Quản Lý"))
         self.KhoaBtn.setText(_translate("MainWindow", "Quản Lý Khoa"))
         self.NganhBtn.setText(_translate("MainWindow", "Quản Lý Nghành"))
         self.LopBtn.setText(_translate("MainWindow", "Quản Lý\nSinh Viên"))

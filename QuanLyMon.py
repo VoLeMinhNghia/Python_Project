@@ -62,16 +62,21 @@ class Ui_MainWindow(object):
         self.btnCancel.setStyleSheet("background-color: rgb(170, 170, 127);")
         self.btnCancel.setObjectName("btnCancel")
         self.label_8 = QtWidgets.QLabel(parent=self.groupBox_2)
-        self.label_8.setGeometry(QtCore.QRect(10, 80, 71, 16))
+        self.label_8.setGeometry(QtCore.QRect(10, 90, 71, 16))
         self.label_8.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_8.setObjectName("label_8")
         self.SoTC = QtWidgets.QSpinBox(parent=self.groupBox_2)
-        self.SoTC.setGeometry(QtCore.QRect(80, 80, 61, 22))
+        self.SoTC.setGeometry(QtCore.QRect(80, 90, 61, 22))
         self.SoTC.setMinimum(1)
         self.SoTC.setMaximum(9)
         self.SoTC.setObjectName("SoTC")
+        self.err = QtWidgets.QLabel(parent=self.groupBox_2)
+        self.err.setGeometry(QtCore.QRect(80, 65, 161, 21))
+        self.err.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err.setText("")
+        self.err.setObjectName("err")
         self.groupBox = QtWidgets.QGroupBox(parent=self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(430, 280, 361, 181))
+        self.groupBox.setGeometry(QtCore.QRect(430, 280, 361, 201))
         self.groupBox.setStyleSheet("background-color: rgb(112, 200, 255);\n"
 "font: 10pt \"Segoe UI\";")
         self.groupBox.setObjectName("groupBox")
@@ -81,11 +86,11 @@ class Ui_MainWindow(object):
         self.detailNameMon.setReadOnly(True)
         self.detailNameMon.setObjectName("detailNameMon")
         self.btnEdit = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnEdit.setGeometry(QtCore.QRect(200, 140, 61, 24))
+        self.btnEdit.setGeometry(QtCore.QRect(200, 160, 61, 24))
         self.btnEdit.setStyleSheet("background-color: rgb(255, 170, 0);")
         self.btnEdit.setObjectName("btnEdit")
         self.btnDelete = QtWidgets.QPushButton(parent=self.groupBox)
-        self.btnDelete.setGeometry(QtCore.QRect(280, 140, 61, 24))
+        self.btnDelete.setGeometry(QtCore.QRect(280, 160, 61, 24))
         self.btnDelete.setStyleSheet("background-color: rgb(170, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.btnDelete.setObjectName("btnDelete")
@@ -103,17 +108,38 @@ class Ui_MainWindow(object):
         self.label_9.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_9.setObjectName("label_9")
         self.label_11 = QtWidgets.QLabel(parent=self.groupBox)
-        self.label_11.setGeometry(QtCore.QRect(10, 110, 71, 16))
+        self.label_11.setGeometry(QtCore.QRect(10, 120, 71, 21))
         self.label_11.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_11.setObjectName("label_11")
         self.detailSoTC = QtWidgets.QSpinBox(parent=self.groupBox)
-        self.detailSoTC.setGeometry(QtCore.QRect(90, 110, 61, 22))
+        self.detailSoTC.setGeometry(QtCore.QRect(90, 120, 61, 22))
         self.detailSoTC.setReadOnly(True)
         self.detailSoTC.setMinimum(1)
         self.detailSoTC.setMaximum(9)
         self.detailSoTC.setObjectName("detailSoTC")
+        self.islock = QtWidgets.QLabel(parent=self.groupBox)
+        self.islock.setGeometry(QtCore.QRect(260, 70, 51, 21))
+        self.islock.setStyleSheet("font: 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.islock.setObjectName("islock")
+        self.islock_2 = QtWidgets.QLabel(parent=self.groupBox)
+        self.islock_2.setGeometry(QtCore.QRect(160, 120, 51, 21))
+        self.islock_2.setStyleSheet("font: 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.islock_2.setText("")
+        self.islock_2.setObjectName("islock_2")
+        self.label_12 = QtWidgets.QLabel(parent=self.groupBox)
+        self.label_12.setGeometry(QtCore.QRect(60, 160, 131, 21))
+        self.label_12.setStyleSheet("font: 10pt \"Segoe UI\";")
+        self.label_12.setObjectName("label_12")
+        self.err_2 = QtWidgets.QLabel(parent=self.groupBox)
+        self.err_2.setGeometry(QtCore.QRect(90, 100, 161, 16))
+        self.err_2.setStyleSheet("color: rgb(170, 0, 0);")
+        self.err_2.setText("")
+        self.err_2.setObjectName("err_2")
         self.btnReload = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.btnReload.setGeometry(QtCore.QRect(430, 470, 91, 31))
+        self.btnReload.setGeometry(QtCore.QRect(430, 490, 91, 31))
         self.btnReload.setStyleSheet("background-color: rgb(16, 16, 255);\n"
 "font: 10pt \"Segoe UI\";\n"
 "color: rgb(255, 255, 255);")
@@ -135,6 +161,9 @@ class Ui_MainWindow(object):
         self.tableMon.setGeometry(QtCore.QRect(0, 80, 421, 471))
         self.tableMon.setRowCount(5)
         self.tableMon.setColumnCount(3)
+        self.tableMon.setColumnWidth(0, 80)
+        self.tableMon.setColumnWidth(1, 270)
+        self.tableMon.setColumnWidth(2, 71)
         self.tableMon.setObjectName("tableMon")
         item = QtWidgets.QTableWidgetItem()
         self.tableMon.setHorizontalHeaderItem(0, item)
@@ -150,6 +179,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
 
         self.btnHome.clicked.connect(partial(self.goHome, MainWindow))
 
@@ -184,30 +214,30 @@ class Ui_MainWindow(object):
         self.window.show()
 
 #-----------------------------INSERT--------------------------------------------
-    # def get_Mon_info(self):
-    #     tenMon = self.NameMon.text()
-    #     sotc = self.detailSoTC.value()
-    #     return tenMon, sotc
 
     def on_btnSave_clicked(self):
-        tenMon = self.NameMon.text().strip()
+        tenMon = self.NameMon.text()
         soTC = self.detailSoTC.value()
-
-        if(tenMon == ""):
-             return self.load_data()
-        
+        if tenMon == "":
+            self.err.setText("Không bỏ trống dữ liệu !!")
+            return         
         # Thêm Mon vào CSDL
         myDB.insert_monhoc(tenMon, soTC)
         self.cancel()
-        # # Thông báo thành công
-        # QtWidgets.QMessageBox.information(self, "Thông báo", f"Thêm Mon {maMon} thành công.")
         self.load_data()
 
     def cancel(self):
         self.NameMon.setText("")
+        self.SoTC.setValue(1)
+        self.err.setText("")
 
 #---------------------------------- UPDATE--------------------------------------
     def on_tableMon_cellClicked(self, row, column):
+        self.load_data()
+        self.islock.setText("Lock")
+        self.islock_2.setText("Lock")
+        self.err_2.setText("")
+
         # Lấy mã Mon từ dòng được click
         maMon = self.tableMon.item(row, 0).text()
 
@@ -222,32 +252,26 @@ class Ui_MainWindow(object):
     def enable_edit_mode(self):
         current_id = self.detailIDKMon.text()
         current_name = self.detailNameMon.text()
-        current_TC = self.detailSoTC.text()
-        if(current_id == "" and current_name == ""):
+
+        if current_id == "" or current_name == "":
              return self.load_data()
         else: 
-             self.detailNameMon.setReadOnly(False)
-             self.detailSoTC.setReadOnly(False)
-
-    def current_selected_Mon(self):
-        selected_rows = self.tableMon.selectedIndexes()
-        if selected_rows:
-                row = selected_rows[0].row()
-                ma_Mon = self.tableMon.item(row, 0).text()
-                ten_Mon = self.tableMon.item(row, 1).text()
-                soTC = self.tableMon.item(row, 2).text()
-                self.detailIDKMon.setText(ma_Mon)
-                self.detailNameMon.setText(ten_Mon)
-                return (ma_Mon, ten_Mon, soTC)
+            self.islock.setStyleSheet("color: rgb(0, 170, 0);")
+            self.islock.setText("Unlock")
+            self.islock_2.setStyleSheet("color: rgb(0, 170, 0);")
+            self.islock_2.setText("Unlock")
+            self.detailNameMon.setReadOnly(False)
+            self.detailSoTC.setReadOnly(False)
 
     def reload_data(self):
         current_id = self.detailIDKMon.text()
         current_name = self.detailNameMon.text()
-        current_TC = self.detailSoTC.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
-        if not self.detailNameMon.isReadOnly() and \
-                (current_id, current_name, current_TC) != self.current_selected_Mon():
+        current_TC = self.detailSoTC.value()
+        current_mon = myDB.select_monhoc_by_id(current_id).fetchone()
+        if current_id == "" or current_name == "":
+            self.err_2.setText("Không bỏ trống dữ liệu !!")
+            return
+        if current_name != current_mon[1] or current_TC != current_mon[2]:
                 myDB.update_monhoc(current_name, current_TC, current_id)
                 self.detailNameMon.setReadOnly(True)
                 self.detailSoTC.setReadOnly(True)
@@ -268,6 +292,15 @@ class Ui_MainWindow(object):
              self.load_data()
 
     def load_data(self):
+        self.islock.setStyleSheet("color: rgb(170, 0, 0);")
+        self.islock.setText("")
+        self.islock_2.setStyleSheet("color: rgb(170, 0, 0);")
+        self.islock_2.setText("")
+        self.err_2.setText("")
+        self.detailNameMon.setReadOnly(True)
+        self.detailSoTC.setReadOnly(True)
+        self.detailSoTC.setValue(1)
+        self.SoTC.setValue(1)
         self.monTable = myDB.select_all_monhoc()
         self.tableMon.setRowCount(0)
         for row_num, row_data in enumerate(self.monTable):
@@ -311,6 +344,7 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "Mã Môn"))
         self.label_9.setText(_translate("MainWindow", "Tên Môn"))
         self.label_11.setText(_translate("MainWindow", "Số Tín Chỉ"))
+        self.label_12.setText(_translate("MainWindow", "Click here to unlock ->"))
         self.btnReload.setText(_translate("MainWindow", "Cập Nhật"))
         self.btnHome.setText(_translate("MainWindow", "Home"))
         item = self.tableMon.horizontalHeaderItem(0)
@@ -318,7 +352,7 @@ class Ui_MainWindow(object):
         item = self.tableMon.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Tên môn học"))
         item = self.tableMon.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Số tín chỉ"))
+        item.setText(_translate("MainWindow", "Số TC"))
 
 def closeWindow():
     global myDB

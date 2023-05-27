@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabQLLop">
      <attribute name="title">
@@ -114,10 +114,10 @@ background-color: rgb(255, 255, 127);</string>
      <widget class="QTableWidget" name="tableLop">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>60</y>
-        <width>781</width>
-        <height>471</height>
+        <width>801</width>
+        <height>421</height>
        </rect>
       </property>
       <property name="rowCount">
@@ -252,6 +252,39 @@ color: rgb(255, 255, 255);</string>
         <width>20</width>
         <height>20</height>
        </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>506</y>
+        <width>331</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Cập nhật danh sách lớp sau thao tác THÊM hoặc SỬA</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>490</y>
+        <width>361</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 9pt &quot;Segoe UI&quot;;
+color: rgb(86, 86, 86);</string>
+      </property>
+      <property name="text">
+       <string>Cập nhật danh sách lớp sau thao tác THÊM hoặc CHỈNH SỬA !!</string>
       </property>
      </widget>
     </widget>
@@ -389,7 +422,7 @@ font: 10pt &quot;Segoe UI&quot;;</string>
         <x>0</x>
         <y>110</y>
         <width>801</width>
-        <height>441</height>
+        <height>371</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -618,6 +651,40 @@ color: rgb(255, 255, 255);</string>
        </size>
       </property>
      </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>490</y>
+        <width>391</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 9pt &quot;Segoe UI&quot;;
+color: rgb(86, 86, 86);</string>
+      </property>
+      <property name="text">
+       <string>Cập nhật danh sách sinh viên sau thao tác THÊM hoặc CHỈNH SỬA !!</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="notFound">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>150</y>
+        <width>471</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 10pt &quot;Segoe UI&quot;;
+color: rgb(170, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabQLDiem">
      <attribute name="title">
@@ -728,10 +795,10 @@ font: 10pt &quot;Segoe UI&quot;;</string>
      <widget class="QTableWidget" name="tableDiem">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>50</y>
-        <width>681</width>
-        <height>481</height>
+        <width>691</width>
+        <height>431</height>
        </rect>
       </property>
       <property name="rowCount">
@@ -780,9 +847,9 @@ font: 10pt &quot;Segoe UI&quot;;</string>
       <property name="geometry">
        <rect>
         <x>700</x>
-        <y>500</y>
+        <y>440</y>
         <width>91</width>
-        <height>31</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -955,6 +1022,23 @@ color: rgb(255, 255, 255);</string>
         <width>20</width>
         <height>20</height>
        </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>490</y>
+        <width>391</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 9pt &quot;Segoe UI&quot;;
+color: rgb(86, 86, 86);</string>
+      </property>
+      <property name="text">
+       <string>Cập nhật danh sách điểm sau thao tác THÊM hoặc CHỈNH SỬA !!</string>
       </property>
      </widget>
     </widget>

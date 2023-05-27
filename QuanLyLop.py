@@ -8,6 +8,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from functools import partial
 from database import *
+from docx import Document
+from PyQt5.QtWidgets import QFileDialog
 
 myDB = MY_DB()
 instance  = None
@@ -69,9 +71,13 @@ class Ui_MainWindow(object):
         self.btnHome.setIconSize(QtCore.QSize(20, 20))
         self.btnHome.setObjectName("btnHome")
         self.tableLop = QtWidgets.QTableWidget(parent=self.tabQLLop)
-        self.tableLop.setGeometry(QtCore.QRect(10, 60, 781, 471))
+        self.tableLop.setGeometry(QtCore.QRect(0, 60, 801, 421))
         self.tableLop.setRowCount(5)
         self.tableLop.setColumnCount(4)
+        self.tableLop.setColumnWidth(0, 150)
+        self.tableLop.setColumnWidth(1, 150)
+        self.tableLop.setColumnWidth(2, 150)
+        self.tableLop.setColumnWidth(3, 330)
         self.tableLop.setObjectName("tableLop")
         item = QtWidgets.QTableWidgetItem()
         self.tableLop.setHorizontalHeaderItem(0, item)
@@ -137,6 +143,11 @@ class Ui_MainWindow(object):
         self.label_4.setGeometry(QtCore.QRect(10, 10, 31, 16))
         self.label_4.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(parent=self.tabQLLop)
+        self.label_5.setGeometry(QtCore.QRect(0, 490, 361, 20))
+        self.label_5.setStyleSheet("font: 700 italic 9pt \"Segoe UI\";\n"
+"color: rgb(86, 86, 86);")
+        self.label_5.setObjectName("label_5")
         self.cbBoxLop = QtWidgets.QComboBox(parent=self.tabQLSV)
         self.cbBoxLop.setGeometry(QtCore.QRect(50, 10, 101, 22))
         self.cbBoxLop.setStyleSheet("font: 10pt \"Segoe UI\";")
@@ -150,10 +161,18 @@ class Ui_MainWindow(object):
         self.btnPrintAllSV.setIconSize(QtCore.QSize(20, 20))
         self.btnPrintAllSV.setObjectName("btnPrintAllSV")
         self.tableSinhVien = QtWidgets.QTableWidget(parent=self.tabQLSV)
-        self.tableSinhVien.setGeometry(QtCore.QRect(0, 110, 801, 441))
+        self.tableSinhVien.setGeometry(QtCore.QRect(0, 110, 801, 371))
         self.tableSinhVien.setStyleSheet("font: 8pt \"Segoe UI\";")
         self.tableSinhVien.setRowCount(5)
         self.tableSinhVien.setColumnCount(8)
+        self.tableSinhVien.setColumnWidth(0, 50)
+        self.tableSinhVien.setColumnWidth(1, 100)
+        self.tableSinhVien.setColumnWidth(2, 130)
+        self.tableSinhVien.setColumnWidth(3, 100)
+        self.tableSinhVien.setColumnWidth(4, 70)
+        self.tableSinhVien.setColumnWidth(5, 100)
+        self.tableSinhVien.setColumnWidth(6, 150)
+        self.tableSinhVien.setColumnWidth(7, 100)
         self.tableSinhVien.setObjectName("tableSinhVien")
         item = QtWidgets.QTableWidgetItem()
         self.tableSinhVien.setHorizontalHeaderItem(0, item)
@@ -230,6 +249,17 @@ class Ui_MainWindow(object):
         self.label_7.setGeometry(QtCore.QRect(390, 20, 51, 16))
         self.label_7.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(parent=self.tabQLSV)
+        self.label_8.setGeometry(QtCore.QRect(0, 490, 391, 20))
+        self.label_8.setStyleSheet("font: 700 italic 9pt \"Segoe UI\";\n"
+"color: rgb(86, 86, 86);")
+        self.label_8.setObjectName("label_8")
+        self.notFound = QtWidgets.QLabel(parent=self.tabQLSV)
+        self.notFound.setGeometry(QtCore.QRect(20, 150, 471, 16))
+        self.notFound.setStyleSheet("font: 700 italic 10pt \"Segoe UI\";\n"
+"color: rgb(170, 0, 0);")
+        self.notFound.setText("")
+        self.notFound.setObjectName("notFound")
         self.cbBoxMon_2 = QtWidgets.QComboBox(parent=self.tabQLDiem)
         self.cbBoxMon_2.setGeometry(QtCore.QRect(220, 20, 161, 22))
         self.cbBoxMon_2.setStyleSheet("font: 10pt \"Segoe UI\";")
@@ -251,9 +281,16 @@ class Ui_MainWindow(object):
         self.btnAddDiem.setIconSize(QtCore.QSize(20, 20))
         self.btnAddDiem.setObjectName("btnAddDiem")
         self.tableDiem = QtWidgets.QTableWidget(parent=self.tabQLDiem)
-        self.tableDiem.setGeometry(QtCore.QRect(10, 50, 681, 481))
+        self.tableDiem.setGeometry(QtCore.QRect(0, 50, 691, 431))
         self.tableDiem.setRowCount(5)
         self.tableDiem.setColumnCount(6)
+        self.tableDiem.setColumnWidth(0, 96)
+        self.tableDiem.setColumnWidth(1, 96)
+        self.tableDiem.setColumnWidth(2, 96)
+        self.tableDiem.setColumnWidth(3, 96)
+        self.tableDiem.setColumnWidth(4, 96)
+        self.tableDiem.setColumnWidth(5, 96)
+        self.tableDiem.setColumnWidth(6, 96)
         self.tableDiem.setObjectName("tableDiem")
         item = QtWidgets.QTableWidgetItem()
         self.tableDiem.setHorizontalHeaderItem(0, item)
@@ -268,7 +305,7 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableDiem.setHorizontalHeaderItem(5, item)
         self.btnPrintAllDiem = QtWidgets.QPushButton(parent=self.tabQLDiem)
-        self.btnPrintAllDiem.setGeometry(QtCore.QRect(700, 500, 91, 31))
+        self.btnPrintAllDiem.setGeometry(QtCore.QRect(700, 440, 91, 41))
         self.btnPrintAllDiem.setStyleSheet("font: 10pt \"Segoe UI\";")
         self.btnPrintAllDiem.setIcon(icon3)
         self.btnPrintAllDiem.setIconSize(QtCore.QSize(20, 20))
@@ -318,6 +355,11 @@ class Ui_MainWindow(object):
         self.btnReloadDiem.setIconSize(QtCore.QSize(20, 20))
         self.btnReloadDiem.setObjectName("btnReloadDiem")
         self.tabQuanLy.addTab(self.tabQLDiem, "")
+        self.label_9 = QtWidgets.QLabel(parent=self.tabQLDiem)
+        self.label_9.setGeometry(QtCore.QRect(0, 490, 391, 20))
+        self.label_9.setStyleSheet("font: 700 italic 9pt \"Segoe UI\";\n"
+"color: rgb(86, 86, 86);")
+        self.label_9.setObjectName("label_9")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
@@ -374,6 +416,7 @@ class Ui_MainWindow(object):
         self.btnReloadSV.clicked.connect(self.load_TableSV)
         self.btnDeleteSV.clicked.connect(self.deleteSV)
         self.btnSortSV.clicked.connect(self.sort_tableSV_by_name)
+        self.btnPrintAllSV.clicked.connect
         
         self.diemTable = myDB.select_all_diem()
         self.tableDiem.setRowCount(0)
@@ -381,6 +424,19 @@ class Ui_MainWindow(object):
                 self.tableDiem.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                      self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        
+        # Thêm cột điểm trung bình
+        self.tableDiem.setColumnCount(self.tableDiem.columnCount() + 1)
+        self.tableDiem.setHorizontalHeaderItem(self.tableDiem.columnCount() - 1, QtWidgets.QTableWidgetItem("ĐTB"))
+
+        for row_num in range(self.tableDiem.rowCount()):
+                diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
 
         self.monTable = myDB.select_all_monhoc()
         self.cbBoxMon_2.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
@@ -434,6 +490,7 @@ class Ui_MainWindow(object):
                 self.addLopWindow = QtWidgets.QMainWindow()
                 self.ui = Ui_MainWindow()
                 self.ui.setupUi(self.addLopWindow)
+        self.ui.new_window()
         self.addLopWindow.show()
         self.addLopWindow.activateWindow()
 
@@ -502,6 +559,7 @@ class Ui_MainWindow(object):
                 self.load_TableSinhVienByLop(selected_lop)
 
     def load_TableSinhVienByLop(self, selected_lop):
+        self.notFound.setText("")
         self.sinhVienTable = myDB.select_sinhvien_by_lop(selected_lop)
         self.tableSinhVien.setRowCount(0)
         for row_num, row_data in enumerate(self.sinhVienTable):
@@ -511,15 +569,25 @@ class Ui_MainWindow(object):
 
     def findSV_byname(self):
         name_find = self.lineEditFindSV.text()
+        if name_find == "":
+              self.load_TableSV()
+              return
         self.sinhVienTable = myDB.select_sinhvien_by_name(name_find)
         self.tableSinhVien.setRowCount(0)
+        flag = 0
         for row_num, row_data in enumerate(self.sinhVienTable):
+                flag = 1
                 self.tableSinhVien.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                         self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        if flag == 1: return
+        if myDB.select_sinhvien_by_name(name_find).fetchone() is None:
+                self.notFound.setText("Không có dữ liệu sinh viên cần tìm, hãy nhập lại thông tin chính xác hơn!!")
+                return
     
     def cancalFind(self):
         self.lineEditFindSV.setText("")
+        self.notFound.setText("")
         self.load_TableSV()
 
     def on_tableSV_cellClicked(self, row, column):
@@ -537,11 +605,14 @@ class Ui_MainWindow(object):
         self.hoTen.setText(sinhvien[2])
 
     def goAddSV(self, MainWindow):
+        self.lineEditFindSV.setText("")
+        self.notFound.setText("")
         if self.addSVWindow is None:
                 from AddSV import Ui_MainWindow as Ui_MainWindow
                 self.addSVWindow = QtWidgets.QMainWindow()
                 self.ui = Ui_MainWindow()
                 self.ui.setupUi(self.addSVWindow)
+        self.ui.new_window()
         self.addSVWindow.show()
         self.addSVWindow.activateWindow()
 
@@ -588,6 +659,7 @@ class Ui_MainWindow(object):
         self.maSinhVien.setText("")
         self.maLop.setText("")
         self.hoTen.setText("")
+        self.notFound.setText("")
         self.cbBoxLop.setCurrentText("All")
         self.sinhVienTable = myDB.select_all_sinhvien()
         self.tableSinhVien.setRowCount(0)
@@ -602,37 +674,66 @@ class Ui_MainWindow(object):
         selected_mon = self.cbBoxMon_2.currentText().split(" ")  # Lấy lớp được chọn từ combobox
         selected_mon = selected_mon[0]
         if selected_mon == "All":
+                if self.cbBoxHocKy.currentText() != "All":
+                        selected_hocky = self.cbBoxHocKy.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+                        selected_hocky = selected_hocky[0]
+                        self.load_TableDiemByhocky(selected_hocky)
                 # Hiển thị tất cả sinh viên
-                self.load_TableDiem()
+                else: self.load_TableDiem()
         else:
                 # Hiển thị sinh viên của lớp được chọn
                 self.load_TableDiemBymon(selected_mon)
-
-    def load_TableDiemBymon(self, selected_mon):
-        self.diemTable = myDB.select_diem_by_mon(selected_mon)
-        self.tableDiem.setRowCount(0)
-        for row_num, row_data in enumerate(self.diemTable):
-                self.tableDiem.insertRow(row_num)
-                for col_num, col_data in enumerate(row_data):
-                     self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
 
     def on_cbHocKy_clicked(self):
         selected_hocky = self.cbBoxHocKy.currentText().split(" ")  # Lấy lớp được chọn từ combobox
         selected_hocky = selected_hocky[0]
         if selected_hocky == "All":
+                if self.cbBoxMon_2.currentText() != "All":
+                      selected_mon = self.cbBoxMon_2.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+                      selected_mon = selected_mon[0]
+                      self.load_TableDiemBymon(selected_mon)
                 # Hiển thị tất cả sinh viên
-                self.load_TableDiem()
+                else: self.load_TableDiem()
         else:
                 # Hiển thị sinh viên của lớp được chọn
                 self.load_TableDiemByhocky(selected_hocky)
+        
+    def load_TableDiemBymon(self, selected_mon):
+        if self.cbBoxHocKy.currentText() != "All":
+                selected_hocky = self.cbBoxHocKy.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+                selected_hocky = selected_hocky[0]
+                self.diemTable = myDB.select_diem_by_hockyAndMon(selected_hocky, selected_mon)
+                self.tableDiem.setRowCount(0)
+                for row_num, row_data in enumerate(self.diemTable):
+                        self.tableDiem.insertRow(row_num)
+                        for col_num, col_data in enumerate(row_data):
+                                self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        else: 
+                self.diemTable = myDB.select_diem_by_mon(selected_mon)
+                self.tableDiem.setRowCount(0)
+                for row_num, row_data in enumerate(self.diemTable):
+                        self.tableDiem.insertRow(row_num)
+                        for col_num, col_data in enumerate(row_data):
+                                self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+
 
     def load_TableDiemByhocky(self, selected_hocky):
-        self.diemTable = myDB.select_diem_by_hocky(selected_hocky)
-        self.tableDiem.setRowCount(0)
-        for row_num, row_data in enumerate(self.diemTable):
-                self.tableDiem.insertRow(row_num)
-                for col_num, col_data in enumerate(row_data):
-                     self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        if self.cbBoxMon_2.currentText() != "All":
+                selected_mon = self.cbBoxMon_2.currentText().split(" ")  # Lấy lớp được chọn từ combobox
+                selected_mon = selected_mon[0]
+                self.diemTable = myDB.select_diem_by_hockyAndMon(selected_hocky, selected_mon)
+                self.tableDiem.setRowCount(0)
+                for row_num, row_data in enumerate(self.diemTable):
+                        self.tableDiem.insertRow(row_num)
+                        for col_num, col_data in enumerate(row_data):
+                                self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        else:
+                self.diemTable = myDB.select_diem_by_hocky(selected_hocky)
+                self.tableDiem.setRowCount(0)
+                for row_num, row_data in enumerate(self.diemTable):
+                        self.tableDiem.insertRow(row_num)
+                        for col_num, col_data in enumerate(row_data):
+                                self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
 
     def on_tableDiem_cellClicked(self, row, column):
         global instance 
@@ -675,6 +776,7 @@ class Ui_MainWindow(object):
                 self.addDiemWindow = QtWidgets.QMainWindow()
                 self.ui = Ui_MainWindow()
                 self.ui.setupUi(self.addDiemWindow)
+        self.ui.new_window()
         self.addDiemWindow.show()
         self.addDiemWindow.activateWindow()
 
@@ -694,7 +796,7 @@ class Ui_MainWindow(object):
         # Lấy số hàng trong bảng
         row_count = self.tableDiem.rowCount()
         # Tạo một danh sách các dòng trong bảng, mỗi dòng là một list các giá trị trong ô
-        rows = [[self.tableDiem.item(row, col).text() for col in range(column_count)] for row in range(row_count)]
+        rows = [[self.tableDiem.item(row, col).text() if self.tableDiem.item(row, col) is not None else "" for col in range(column_count)] for row in range(row_count)]
         # Sắp xếp các dòng theo thứ tự tăng dần của cột mon (cột thứ hai)
         sorted_rows = sorted(rows, key=lambda row: row[2])
         # Xóa tất cả các hàng cũ trong bảng
@@ -718,6 +820,15 @@ class Ui_MainWindow(object):
                 self.tableDiem.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                      self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+        #Thêm cột điểm
+        for row_num in range(self.tableDiem.rowCount()):
+                diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -741,9 +852,10 @@ class Ui_MainWindow(object):
         self.btnAddSV.setText(_translate("MainWindow", "Thêm Sinh Viên"))
         self.label_3.setText(_translate("MainWindow", "Tìm Kiếm"))
         self.label_4.setText(_translate("MainWindow", "Lớp"))
+        self.label_5.setText(_translate("MainWindow", "Cập nhật danh sách lớp sau thao tác THÊM hoặc CHỈNH SỬA !!"))
         self.btnPrintAllSV.setText(_translate("MainWindow", "Xuất"))
         item = self.tableSinhVien.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Mã sinh viên"))
+        item.setText(_translate("MainWindow", "MSSV"))
         item = self.tableSinhVien.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Mã lớp"))
         item = self.tableSinhVien.horizontalHeaderItem(2)
@@ -757,7 +869,7 @@ class Ui_MainWindow(object):
         item = self.tableSinhVien.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Địa chỉ"))
         item = self.tableSinhVien.horizontalHeaderItem(7)
-        item.setText(_translate("MainWindow", "Số điện thoại"))
+        item.setText(_translate("MainWindow", "SĐT"))
         self.btnDetailSV.setText(_translate("MainWindow", "Xem Chi Tiết"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Thông Tin"))
         self.btnDeleteSV.setText(_translate("MainWindow", "Xóa"))
@@ -766,14 +878,16 @@ class Ui_MainWindow(object):
         self.tabQuanLy.setTabText(self.tabQuanLy.indexOf(self.tabQLSV), _translate("MainWindow", "Quản Lý Sinh Viên"))
         self.label_6.setText(_translate("MainWindow", "Môn Học"))
         self.label_7.setText(_translate("MainWindow", "Học Kỳ"))
+        self.label_8.setText(_translate("MainWindow", "Cập nhật danh sách sinh viên sau thao tác THÊM hoặc CHỈNH SỬA !!"))
+        self.label_9.setText(_translate("MainWindow", "Cập nhật danh sách điểm sau thao tác THÊM hoặc CHỈNH SỬA !!"))
         self.label.setText(_translate("MainWindow", "CẬP NHẬT BẢNG ĐIỂM"))
         self.btnAddDiem.setText(_translate("MainWindow", "Thêm Bảng Điểm"))
         item = self.tableDiem.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Mã sinh viên"))
+        item.setText(_translate("MainWindow", "MSSV"))
         item = self.tableDiem.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Mã học kỳ"))
         item = self.tableDiem.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Mã môn"))
+        item.setText(_translate("MainWindow", "Mã môn học"))
         item = self.tableDiem.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "Điểm quá trình"))
         item = self.tableDiem.horizontalHeaderItem(4)
