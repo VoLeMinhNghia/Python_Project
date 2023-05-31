@@ -161,9 +161,9 @@ class Ui_QuanLyNghanh(object):
         self.tableNghanh.setGeometry(QtCore.QRect(10, 80, 411, 471))
         self.tableNghanh.setRowCount(5)
         self.tableNghanh.setColumnCount(3)
-        self.tableNghanh.setColumnWidth(0, 100)
-        self.tableNghanh.setColumnWidth(1, 100)
-        self.tableNghanh.setColumnWidth(2, 211)
+        self.tableNghanh.setColumnWidth(0, 90)
+        self.tableNghanh.setColumnWidth(1, 70)
+        self.tableNghanh.setColumnWidth(2, 250)
         self.tableNghanh.setObjectName("tableNghanh")
         item = QtWidgets.QTableWidgetItem()
         self.tableNghanh.setHorizontalHeaderItem(0, item)
@@ -186,9 +186,7 @@ class Ui_QuanLyNghanh(object):
         self.cbBoxKhoa.clear()  # Xóa danh sách cũ trong combobox trước khi thêm mới
         for row_data in self.khoaTable:
                 ma_khoa = row_data[0] 
-                #ten_khoa = row_data[1]
                 self.cbBoxKhoa.addItem(str(ma_khoa))
-                # self.cbBoxKhoa.addItem(str(ma_khoa + "-" + ten_khoa))
 
 
         self.retranslateUi(QuanLyNghanh)
@@ -238,8 +236,6 @@ class Ui_QuanLyNghanh(object):
         # Thêm Nghanh vào CSDL
         myDB.insert_nghanh(maNghanh, makhoa, tenNghanh)
         self.cancel()
-        # # Thông báo thành công
-        # QtWidgets.QMessageBox.information(self, "Thông báo", f"Thêm Nghanh {maNghanh} thành công.")
         self.load_data()
 
     def cancel(self):

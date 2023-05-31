@@ -175,7 +175,7 @@ class Ui_MainWindow(object):
         current_id = self.detailIDSV.text()
         current_sinhvien = myDB.select_sinhvien_by_id(current_id).fetchone()
 
-        current_name = self.detailNameSV.text()
+        current_name = self.detailNameSV.text().strip()
 
         date_of_birth = self.dateOfB.date()
         current_dob = date_of_birth.toString("yyyy-MM-dd")
@@ -188,9 +188,9 @@ class Ui_MainWindow(object):
         else:
             current_gender = 2
 
-        current_dantoc = self.detailDanToc.text()
-        current_diachi = self.plainTextEditDiaChi.toPlainText()
-        current_sdt = self.detailSDT.text()
+        current_dantoc = self.detailDanToc.text().strip()
+        current_diachi = self.plainTextEditDiaChi.toPlainText().strip()
+        current_sdt = self.detailSDT.text().strip()
 
         if current_name == "" or current_dantoc == "" or current_diachi == "" or current_sdt == "":
             self.err.setText("Không bỏ trống thông tin !!")

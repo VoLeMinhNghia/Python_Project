@@ -177,7 +177,7 @@ class Ui_MainWindow(object):
 #-----------------------------------DELETE----------------------------------------------------
     def delete(self):
         current_id = self.detailIDNienKhoa.text()
-        if(current_id == ""):
+        if current_id == "":
              return self.load_data()
         else:
              myDB.delete_nienkhoa(current_id)

@@ -141,7 +141,7 @@ class Ui_MainWindow(object):
         self.MainWindow.close() 
 
     def on_btnSave_clicked(self, MainWindow):
-        current_idSinhvien = self.maSV.text()
+        current_idSinhvien = self.maSV.text().strip()
         sinh_vien = myDB.select_sinhvien_by_id(current_idSinhvien).fetchone()
         if current_idSinhvien == "": 
             self.err.setText("Không bỏ trống !!")
@@ -154,6 +154,11 @@ class Ui_MainWindow(object):
         current_idHocKy = current_idHocKy[0]
         current_idMon = self.cbBoxMon.currentText().split(" ")
         current_idMon = current_idMon[0]
+
+        bang_diem = myDB.select_diem_by_ids(current_idSinhvien, current_idHocKy, current_idMon).fetchone()
+        if bang_diem != None:
+            self.err.setText("Bảng điểm đã tồn tại !!")
+            return
         current_diemQuaTrinh = self.doubleQuaTrinh.value()
         current_diemGiuaKy = self.doubleGiuaKy.value()
         current_diemCuoiKy = self.doubleCuoiKy.value()

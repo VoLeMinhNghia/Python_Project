@@ -117,7 +117,7 @@ class Ui_MainWindow(object):
             # Hiển thị thông tin lớp trong giao diện DetailLop
             self.detailIDLop.setText(lop[0])
             self.detailIDNghanh.setText(lop[1])
-            self.detailIDNienKhoa.setText(str(lop[2]))
+            self.detailIDNienKhoa.setText(myDB.get_ten_nien_khoa(lop[2]))
             self.detailNameLop.setText(lop[3])
         
         self.btnEdit.clicked.connect(partial(self.update_data, MainWindow))
@@ -129,7 +129,7 @@ class Ui_MainWindow(object):
     def update_data(self, MainWindow):
         # from QuanLyLop import Ui_MainWindow as Ui_MainWindow
         current_id = self.detailIDLop.text()
-        current_name = self.detailNameLop.text()
+        current_name = self.detailNameLop.text().strip()
         current_lop =  myDB.select_lop_by_id(current_id).fetchone()
 
         if current_name == "":

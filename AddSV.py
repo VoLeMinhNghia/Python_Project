@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
 
     def on_btnSave_clicked(self, MainWindow):
         current_IDLop = self.cbBoxLop.currentText()
-        current_name = self.NameSV.text()
+        current_name = self.NameSV.text().strip()
 
         date_of_birth = self.dateOfB.date()
         current_dob = date_of_birth.toString("yyyy-MM-dd")
@@ -138,9 +138,9 @@ class Ui_MainWindow(object):
         else:
             current_gender = 2
 
-        current_dantoc = self.detailDanToc.text()
-        current_diachi = self.plainTextEditDiaChi.toPlainText()
-        current_sdt = self.detailSDT.text()
+        current_dantoc = self.detailDanToc.text().strip()
+        current_diachi = self.plainTextEditDiaChi.toPlainText().strip()
+        current_sdt = self.detailSDT.text().strip()
 
         if current_name == "" or current_dantoc == "" or current_diachi == "" or current_sdt == "":
             self.errAddSV.setText("Không bỏ trống thông tin !!")

@@ -166,13 +166,13 @@ class Ui_MainWindow(object):
         self.tableSinhVien.setRowCount(5)
         self.tableSinhVien.setColumnCount(8)
         self.tableSinhVien.setColumnWidth(0, 50)
-        self.tableSinhVien.setColumnWidth(1, 100)
-        self.tableSinhVien.setColumnWidth(2, 130)
-        self.tableSinhVien.setColumnWidth(3, 100)
-        self.tableSinhVien.setColumnWidth(4, 70)
-        self.tableSinhVien.setColumnWidth(5, 100)
-        self.tableSinhVien.setColumnWidth(6, 150)
-        self.tableSinhVien.setColumnWidth(7, 100)
+        self.tableSinhVien.setColumnWidth(1, 80)
+        self.tableSinhVien.setColumnWidth(2, 160)
+        self.tableSinhVien.setColumnWidth(3, 80)
+        self.tableSinhVien.setColumnWidth(4, 60)
+        self.tableSinhVien.setColumnWidth(5, 60)
+        self.tableSinhVien.setColumnWidth(6, 170)
+        self.tableSinhVien.setColumnWidth(7, 130)
         self.tableSinhVien.setObjectName("tableSinhVien")
         item = QtWidgets.QTableWidgetItem()
         self.tableSinhVien.setHorizontalHeaderItem(0, item)
@@ -577,6 +577,7 @@ class Ui_MainWindow(object):
         flag = 0
         for row_num, row_data in enumerate(self.sinhVienTable):
                 flag = 1
+                self.notFound.setText("")
                 self.tableSinhVien.insertRow(row_num)
                 for col_num, col_data in enumerate(row_data):
                         self.tableSinhVien.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
@@ -708,6 +709,14 @@ class Ui_MainWindow(object):
                         self.tableDiem.insertRow(row_num)
                         for col_num, col_data in enumerate(row_data):
                                 self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+                for row_num in range(self.tableDiem.rowCount()):
+                        diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                        diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                        diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                        diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                        item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                        self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
         else: 
                 self.diemTable = myDB.select_diem_by_mon(selected_mon)
                 self.tableDiem.setRowCount(0)
@@ -715,6 +724,14 @@ class Ui_MainWindow(object):
                         self.tableDiem.insertRow(row_num)
                         for col_num, col_data in enumerate(row_data):
                                 self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+                for row_num in range(self.tableDiem.rowCount()):
+                        diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                        diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                        diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                        diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                        item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                        self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
 
 
     def load_TableDiemByhocky(self, selected_hocky):
@@ -727,6 +744,14 @@ class Ui_MainWindow(object):
                         self.tableDiem.insertRow(row_num)
                         for col_num, col_data in enumerate(row_data):
                                 self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+                for row_num in range(self.tableDiem.rowCount()):
+                        diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                        diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                        diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                        diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                        item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                        self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
         else:
                 self.diemTable = myDB.select_diem_by_hocky(selected_hocky)
                 self.tableDiem.setRowCount(0)
@@ -734,6 +759,14 @@ class Ui_MainWindow(object):
                         self.tableDiem.insertRow(row_num)
                         for col_num, col_data in enumerate(row_data):
                                 self.tableDiem.setItem(row_num, col_num, QtWidgets.QTableWidgetItem(str(col_data)))
+                for row_num in range(self.tableDiem.rowCount()):
+                        diem_qua_trinh = float(self.tableDiem.item(row_num, 3).text())
+                        diem_giua_ky = float(self.tableDiem.item(row_num, 4).text())
+                        diem_cuoi_ky = float(self.tableDiem.item(row_num, 5).text())
+                        diem_trung_binh = (diem_qua_trinh * 20 + diem_giua_ky * 30 + diem_cuoi_ky * 50) / 100
+
+                        item = QtWidgets.QTableWidgetItem(str(diem_trung_binh))
+                        self.tableDiem.setItem(row_num, self.tableDiem.columnCount() - 1, item)
 
     def on_tableDiem_cellClicked(self, row, column):
         global instance 

@@ -114,8 +114,8 @@ class Ui_MainWindow(object):
         self.MainWindow.close() 
 
     def on_btnSave_clicked(self, MainWindow):
-        malop = self.IDLop.text()
-        tenlop = self.NameLop.text()
+        malop = self.IDLop.text().strip()
+        tenlop = self.NameLop.text().strip()
         manghanh = self.cbBoxNghanh.currentText()
         nienkhoa = self.cbBoxNienKhoa.currentText().split(" ")
         manNienkhoa = nienkhoa[0]

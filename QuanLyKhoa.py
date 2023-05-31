@@ -268,8 +268,8 @@ class Ui_QuanLyKhoa(object):
     def delete(self):
         current_id = self.detailIDKhoa.text()
         current_name = self.detailNameKhoa.text()
-        if(current_id == "" and current_name == ""):
-             return self.load_data()
+        if current_id == "" or current_name == "":
+            return self.load_data()
         else:
             myDB.delete_khoa(current_id)
             self.detailIDKhoa.setText("")

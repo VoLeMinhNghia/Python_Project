@@ -141,7 +141,7 @@ class Ui_MainWindow(object):
 
 #-----------------------------INSERT--------------------------------------------
     def on_btnSave_clicked(self):
-        tenHocKy = self.NameHocKy.text()
+        tenHocKy = self.NameHocKy.text().strip()
 
         if tenHocKy == "":
             self.err.setText("Không bỏ trống dữ liệu !!")
@@ -169,7 +169,7 @@ class Ui_MainWindow(object):
 #-----------------------------------DELETE----------------------------------------------------
     def delete(self):
         current_id = self.detailIDHocKy.text()
-        if(current_id == ""):
+        if current_id == "":
              return self.load_data()
         else:
              myDB.delete_hocky(current_id)

@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.tableMon.setGeometry(QtCore.QRect(0, 80, 421, 471))
         self.tableMon.setRowCount(5)
         self.tableMon.setColumnCount(3)
-        self.tableMon.setColumnWidth(0, 80)
+        self.tableMon.setColumnWidth(0, 55)
         self.tableMon.setColumnWidth(1, 270)
         self.tableMon.setColumnWidth(2, 71)
         self.tableMon.setObjectName("tableMon")
@@ -216,8 +216,8 @@ class Ui_MainWindow(object):
 #-----------------------------INSERT--------------------------------------------
 
     def on_btnSave_clicked(self):
-        tenMon = self.NameMon.text()
-        soTC = self.detailSoTC.value()
+        tenMon = self.NameMon.text().strip()
+        soTC = self.SoTC.value()
         if tenMon == "":
             self.err.setText("Không bỏ trống dữ liệu !!")
             return         
@@ -267,6 +267,7 @@ class Ui_MainWindow(object):
         current_id = self.detailIDKMon.text()
         current_name = self.detailNameMon.text()
         current_TC = self.detailSoTC.value()
+
         current_mon = myDB.select_monhoc_by_id(current_id).fetchone()
         if current_id == "" or current_name == "":
             self.err_2.setText("Không bỏ trống dữ liệu !!")
@@ -283,7 +284,7 @@ class Ui_MainWindow(object):
     def delete(self):
         current_id = self.detailIDKMon.text()
         current_name = self.detailNameMon.text()
-        if(current_id == "" and current_name == ""):
+        if current_id == "" or current_name == "":
              return self.load_data()
         else:
              myDB.delete_monhoc(current_id)
@@ -348,9 +349,9 @@ class Ui_MainWindow(object):
         self.btnReload.setText(_translate("MainWindow", "Cập Nhật"))
         self.btnHome.setText(_translate("MainWindow", "Home"))
         item = self.tableMon.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Mã môn học"))
+        item.setText(_translate("MainWindow", "Mã môn"))
         item = self.tableMon.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Tên môn học"))
+        item.setText(_translate("MainWindow", "Tên môn"))
         item = self.tableMon.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Số TC"))
 
